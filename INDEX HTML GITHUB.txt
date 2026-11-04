@@ -1,0 +1,2590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBNV Conectar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --paper-2:#F7F2F2;
+    --ink:#231F20;
+    --ink-soft:#6E6663;
+    --wine:#C21E24;
+    --wine-deep:#8E1418;
+    --gold:#C21E24;
+    --line:#EBDCDC;
+    --verde:#4C7A51;
+    --amarelo:#B8892C;
+    --laranja:#C1682E;
+    --vermelho:#A63A2E;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{font-family:'Source Serif 4',serif;}
+  header.top{
+    background:var(--white);
+    color:var(--ink);
+    padding:18px 28px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:14px;
+    border-bottom:4px solid var(--wine);
+  }
+  header.top .brand{display:flex;align-items:center;gap:14px;}
+  header.top .brand img{height:44px;width:auto;display:block;}
+  header.top h1{margin:0;font-size:1.4rem;font-weight:600;letter-spacing:.2px;color:var(--wine-deep);}
+  header.top .tagline{font-size:.78rem;color:var(--ink-soft);margin-top:1px;}
+  header.top .who{font-size:.85rem;text-align:right;color:var(--ink-soft);}
+  header.top .who button{
+    background:transparent;border:1px solid var(--wine);color:var(--wine);
+    padding:5px 12px;border-radius:20px;font-size:.75rem;cursor:pointer;margin-left:8px;
+  }
+  header.top .who button:hover{background:var(--wine);color:var(--white);}
+  main{max-width:980px;margin:0 auto;padding:24px 20px 60px;}
+  .card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:24px;
+  }
+  .center-wrap{display:flex;justify-content:center;align-items:flex-start;padding-top:8vh;}
+  .login-card{max-width:420px;width:100%;}
+  .login-card h2{margin-top:0;font-size:1.3rem;}
+  .login-choice{
+    display:flex;flex-direction:column;gap:10px;margin-top:18px;
+  }
+  .login-choice button{
+    text-align:left;
+    padding:14px 16px;
+    border:1px solid var(--line);
+    background:var(--paper-2);
+    border-radius:6px;
+    font-family:inherit;
+    font-size:.95rem;
+    cursor:pointer;
+    color:var(--ink);
+  }
+  .login-choice button:hover{border-color:var(--gold);}
+  .login-choice button b{display:block;font-family:'Source Serif 4',serif;font-size:1.02rem;margin-bottom:2px;}
+  label{
+    display:block;font-size:.78rem;color:var(--ink-soft);margin:14px 0 4px;font-weight:500;
+  }
+  input[type=text],input[type=password],input[type=tel],input[type=date],select,textarea{
+    width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:5px;
+    font-family:inherit;font-size:.9rem;background:var(--white);color:var(--ink);
+  }
+  textarea{resize:vertical;min-height:60px;}
+  .btn{
+    display:inline-block;padding:9px 18px;border-radius:5px;border:none;
+    font-family:inherit;font-size:.88rem;cursor:pointer;font-weight:600;
+  }
+  .btn-primary{background:var(--wine);color:var(--white);}
+  .btn-primary:hover{background:var(--wine-deep);}
+  .btn-outline{background:transparent;border:1px solid var(--wine);color:var(--wine);}
+  .btn-outline:hover{background:var(--wine);color:var(--white);}
+  .btn-danger{background:var(--vermelho);color:var(--white);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;}
+  .btn-small{padding:5px 11px;font-size:.78rem;}
+  .error-text{color:var(--vermelho);font-size:.82rem;margin-top:8px;}
+  .hint{font-size:.78rem;color:var(--ink-soft);margin-top:6px;}
+  nav.tabs{
+    display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px;flex-wrap:wrap;
+  }
+  nav.tabs button{
+    background:none;border:none;padding:10px 14px;font-family:inherit;font-size:.86rem;
+    cursor:pointer;color:var(--ink-soft);border-bottom:2px solid transparent;
+  }
+  nav.tabs button.active{color:var(--wine);border-bottom-color:var(--wine);font-weight:600;}
+  .stat-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px;}
+  .stat{
+    flex:1;min-width:110px;background:var(--paper-2);border-radius:6px;padding:14px 16px;
+  }
+  .stat .num{font-family:'Source Serif 4',serif;font-size:1.7rem;line-height:1;}
+  .stat .lbl{font-size:.72rem;color:var(--ink-soft);margin-top:4px;}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle;}
+  .dot.verde{background:var(--verde);} .dot.amarelo{background:var(--amarelo);}
+  .dot.laranja{background:var(--laranja);} .dot.vermelho{background:var(--vermelho);}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+  .toolbar input[type=text]{flex:1;min-width:160px;}
+  .toolbar select{width:auto;}
+  .person-row{
+    border:1px solid var(--line);border-radius:6px;margin-bottom:10px;overflow:hidden;
+  }
+  .person-head{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:12px 16px;cursor:pointer;background:var(--paper);
+  }
+  .person-head:hover{background:var(--paper-2);}
+  .person-head .name{font-family:'Source Serif 4',serif;font-size:1.02rem;}
+  .person-head .meta{font-size:.76rem;color:var(--ink-soft);margin-top:2px;}
+  .person-body{padding:16px;border-top:1px solid var(--line);display:none;background:var(--white);}
+  .person-body.open{display:block;}
+  .section-block{
+    padding:14px;border:1px solid var(--line);border-radius:6px;margin-bottom:12px;
+  }
+  .section-block.locked{background:#FAF8F4;opacity:.62;}
+  .section-block h4{margin:0 0 8px;font-size:.85rem;color:var(--wine);}
+  .section-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;}
+  .section-grid > div{grid-column:span 1;}
+  .full{grid-column:1/-1 !important;}
+  .checkline{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:.86rem;}
+  .checkline input{width:auto;}
+  .roster-table, .people-table{width:100%;border-collapse:collapse;font-size:.86rem;}
+  .roster-table th,.roster-table td, .people-table th, .people-table td{
+    text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);
+  }
+  .pill{
+    display:inline-block;padding:2px 9px;border-radius:20px;font-size:.72rem;background:var(--paper-2);
+  }
+  .flag{font-size:.74rem;color:var(--vermelho);margin-top:2px;}
+  .empty-note{
+    text-align:center;padding:40px 20px;color:var(--ink-soft);font-size:.9rem;
+  }
+  form.inline-add{
+    display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:18px;
+    padding:14px;background:var(--paper-2);border-radius:6px;
+  }
+  form.inline-add label{margin:0;}
+  form.inline-add > div{min-width:150px;}
+  .banner{
+    background:#F3E8DD;border:1px solid var(--gold);border-radius:6px;padding:10px 14px;
+    font-size:.82rem;margin-bottom:18px;color:var(--ink);
+  }
+  .org-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+  @media (max-width:860px){ .org-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ .org-grid{grid-template-columns:1fr;} }
+  .org-card{
+    border:1px solid var(--line);border-radius:8px;padding:0;background:var(--white);
+    overflow:hidden;display:flex;flex-direction:column;
+  }
+  .org-card .org-head{
+    display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:2px solid var(--wine);
+  }
+  .org-card .org-icon{
+    width:36px;height:36px;border-radius:50%;background:var(--wine);color:var(--white);
+    display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;
+  }
+  .org-card h4{margin:0;font-size:.98rem;color:var(--ink);font-weight:700;}
+  .org-card .org-sub{font-size:.66rem;color:var(--ink-soft);letter-spacing:.3px;margin-top:1px;}
+  .org-card .org-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;}
+  .org-role{margin-bottom:10px;}
+  .org-role .role-label{
+    display:inline-block;font-size:.66rem;color:var(--white);background:var(--wine);
+    padding:2px 9px;border-radius:3px;margin-bottom:5px;font-weight:600;
+  }
+  .org-role .names{font-size:.86rem;line-height:1.5;}
+  .org-role .names .empty{color:var(--ink-soft);font-style:italic;}
+  .org-count{font-size:.7rem;color:var(--ink-soft);margin-left:auto;text-align:right;flex-shrink:0;}
+  .org-quote{
+    margin-top:auto;padding-top:10px;border-top:1px solid var(--line);
+    font-size:.76rem;font-style:italic;color:var(--ink-soft);text-align:center;
+  }
+  .org-quote b{display:block;font-style:normal;color:var(--wine);margin-top:3px;font-size:.72rem;}
+  .org-flow{
+    display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;
+    margin:26px 0 10px;padding:18px;background:var(--paper-2);border-radius:8px;
+  }
+  .org-flow .step{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.72rem;color:var(--wine-deep);font-weight:600;}
+  .org-flow .step .circle{
+    width:40px;height:40px;border-radius:50%;background:var(--white);border:2px solid var(--wine);
+    display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--wine);
+  }
+  .org-flow .sep{color:var(--wine);font-size:.9rem;}
+  @media print{
+    header.top, nav.tabs, .no-print{display:none !important;}
+    body{background:#fff;}
+    main{padding:0;max-width:none;}
+    .card{border:none;padding:0;}
+  }
+  .chip{display:inline-block;padding:1px 9px;border-radius:12px;font-size:.68rem;background:#FDECEC;color:var(--wine-deep);margin:4px 4px 0 0;font-weight:600;}
+  .phase-chart{display:flex;flex-direction:column;gap:10px;}
+  .phase-row{display:flex;align-items:center;gap:12px;}
+  .phase-label{
+    width:180px;flex-shrink:0;font-size:.82rem;color:var(--ink);
+    display:flex;flex-direction:column;line-height:1.2;
+  }
+  .phase-label .phase-team{font-size:.68rem;color:var(--ink-soft);}
+  .phase-track{
+    flex:1;background:var(--paper-2);border-radius:20px;height:20px;overflow:hidden;position:relative;
+  }
+  .phase-fill{height:100%;border-radius:20px;transition:width .3s ease;}
+  .phase-count{width:28px;text-align:right;font-size:.86rem;font-weight:600;color:var(--wine-deep);flex-shrink:0;}
+  @media (max-width:560px){
+    .phase-label{width:110px;font-size:.74rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <img id="headerLogo" src="" alt="IBNV Igreja Batista Nova Vida">
+    <div>
+      <h1>Projeto IBNV Conectar</h1>
+      <div class="tagline">Cuidando de Pessoas, Consolidando Vidas e Fazendo Discípulos</div>
+    </div>
+  </div>
+  <div class="who" id="whoBox" style="display:none;">
+    <span id="whoLabel"></span>
+    <button onclick="logout()">Trocar</button>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* ===== BANCO DE DADOS — preencha UM dos dois blocos (Supabase OU Firebase) ===== */
+const SUPABASE_CONFIG = {
+  url: "COLE_AQUI",   // Project URL, ex.: https://abcdefgh.supabase.co
+  key: "COLE_AQUI"    // Publishable key (sb_publishable_...) ou anon key
+};
+const FIREBASE_CONFIG = {
+  apiKey: "COLE_AQUI",
+  authDomain: "COLE_AQUI",
+  projectId: "COLE_AQUI",
+  storageBucket: "COLE_AQUI",
+  messagingSenderId: "COLE_AQUI",
+  appId: "COLE_AQUI"
+};
+/* ================================================================================ */
+(function(){
+  if(window.storage) return; // dentro do Claude, usa o armazenamento nativo
+  var usaSupabase = SUPABASE_CONFIG.url !== "COLE_AQUI" && SUPABASE_CONFIG.key !== "COLE_AQUI" && window.supabase;
+  var usaFirebase = FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey !== "COLE_AQUI" && window.firebase;
+  if(usaSupabase){
+    var sb = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.key);
+    window.storage = {
+      get: async function(key){
+        var r = await sb.from('kv').select('value').eq('key', key).maybeSingle();
+        if(r.error) throw r.error;
+        return r.data ? {key: key, value: r.data.value, shared: true} : null;
+      },
+      set: async function(key, value){
+        var r = await sb.from('kv').upsert({key: key, value: value}, {onConflict: 'key'});
+        if(r.error) throw r.error;
+        return {key: key, value: value, shared: true};
+      }
+    };
+    return;
+  }
+  if(usaFirebase){
+    firebase.initializeApp(FIREBASE_CONFIG);
+    var db = firebase.firestore();
+    window.storage = {
+      get: async function(key){
+        var d = await db.collection('ibnv').doc(key).get();
+        if(!d.exists) return null;
+        return {key: key, value: d.data().value, shared: true};
+      },
+      set: async function(key, value){
+        await db.collection('ibnv').doc(key).set({value: value});
+        return {key: key, value: value, shared: true};
+      }
+    };
+    return;
+  }
+  window.addEventListener('DOMContentLoaded', function(){
+    var b = document.createElement('div');
+    b.style.cssText = 'background:#FFF3CD;color:#6B4E00;padding:10px 16px;font:14px Arial;text-align:center;';
+    b.textContent = 'Banco de dados ainda não configurado: os dados NÃO estão sendo salvos.';
+    document.body.insertBefore(b, document.body.firstChild);
+  });
+})();
+</script>
+<script>
+const LOGO_URI = "data:image/jpeg;base64,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";
+document.getElementById('headerLogo').src = LOGO_URI;
+/* ---------- Avisos e confirmações dentro da página (não dependem das janelas do navegador) ---------- */
+function toast(msg){
+  try{
+    let box = document.getElementById('toastBox');
+    if(!box){
+      box = document.createElement('div'); box.id = 'toastBox';
+      box.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:center;max-width:92vw;';
+      document.body.appendChild(box);
+    }
+    const t = document.createElement('div');
+    t.textContent = String(msg);
+    t.style.cssText = 'background:#231F20;color:#fff;padding:10px 16px;border-radius:8px;font:14px Inter,Arial,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);';
+    box.appendChild(t);
+    setTimeout(()=>{ t.remove(); }, 4500);
+  }catch(e){ console.warn(msg); }
+}
+window.alert = function(m){ toast(m); };
+function pedirConfirmacao(anchor, texto, acoes){
+  if(typeof acoes==='function') acoes = [{label:'Sim, excluir', fn:acoes}];
+  const box = document.createElement('div');
+  box.className = 'confirm-inline';
+  box.style.cssText = 'background:#FFF3F3;border:1px solid #A63A2E;border-radius:6px;padding:10px 12px;margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;';
+  const span = document.createElement('span');
+  span.style.cssText = 'font-size:.84rem;flex:1 1 100%;';
+  span.textContent = texto;
+  box.appendChild(span);
+  const fechar = ()=>{ box.remove(); anchor.style.display = ''; };
+  acoes.forEach(a=>{
+    const b = document.createElement('button');
+    b.className = 'btn btn-danger btn-small'; b.textContent = a.label;
+    b.onclick = ()=>{ fechar(); a.fn(); };
+    box.appendChild(b);
+  });
+  const c = document.createElement('button');
+  c.className = 'btn btn-outline btn-small'; c.textContent = 'Cancelar'; c.onclick = fechar;
+  box.appendChild(c);
+  anchor.style.display = 'none';
+  anchor.parentNode.insertBefore(box, anchor.nextSibling);
+}
+
+/* ---------- Persistência ---------- */
+const SEED_ROSTER = [
+  {id:'seed-leia', name:'Léia', team:'recepcao', role:'Líder'},
+  {id:'seed-marquinhos', name:'Marquinhos', team:'recepcao', role:'Adjunto'},
+  {id:'seed-aline', name:'Aline', team:'recepcao', role:'Integrante'},
+  {id:'seed-camila', name:'Camila', team:'recepcao', role:'Integrante'},
+  {id:'seed-daniela', name:'Daniela', team:'recepcao', role:'Integrante'},
+  {id:'seed-danilo', name:'Danilo', team:'recepcao', role:'Integrante'},
+  {id:'seed-edna', name:'Edna', team:'recepcao', role:'Integrante'},
+  {id:'seed-edson-melo', name:'Edson Melo', team:'recepcao', role:'Integrante'},
+  {id:'seed-fernanda', name:'Fernanda', team:'recepcao', role:'Integrante'},
+  {id:'seed-jacqueline', name:'Jacqueline', team:'recepcao', role:'Integrante'},
+  {id:'seed-marcia-rodrigues', name:'Márcia Rodrigues', team:'recepcao', role:'Integrante'},
+  {id:'seed-marjorie', name:'Marjorie', team:'recepcao', role:'Integrante'},
+  {id:'seed-michelle-cople', name:'Michelle Cople', team:'recepcao', role:'Integrante'},
+  {id:'seed-mirian', name:'Mirian', team:'recepcao', role:'Integrante'},
+  {id:'seed-patricia', name:'Patricia', team:'recepcao', role:'Integrante'},
+  {id:'seed-rafael', name:'Rafael', team:'recepcao', role:'Integrante'},
+  {id:'seed-rosangela', name:'Rosangela', team:'recepcao', role:'Integrante'},
+  {id:'seed-tatiane', name:'Tatiane', team:'recepcao', role:'Integrante'},
+  {id:'seed-leandro', name:'Leandro', team:'recepcao', role:'Integrante'},
+  {id:'seed-sara', name:'Sara', team:'recepcao', role:'Integrante'},
+  {id:'seed-paulo', name:'Paulo', team:'recepcao', role:'Integrante'},
+  {id:'seed-vanessa', name:'Vanessa', team:'recepcao', role:'Integrante'},
+  {id:'seed-claudio-rodrigues', name:'Claudio Rodrigues', team:'recepcao', role:'Integrante'},
+  {id:'seed-julia-fontes', name:'Júlia Fontes', team:'recepcao', role:'Integrante'},
+  {id:'seed-eunice', name:'Eunice', team:'recepcao', role:'Integrante'},
+  {id:'seed-ademir', name:'Ademir', team:'recepcao', role:'Integrante'},
+  {id:'seed-rosa-maria', name:'Rosa Maria', team:'recepcao', role:'Integrante'},
+  {id:'seed-mirian-sales', name:'Mirian Sales', team:'recepcao', role:'Integrante'},
+  {id:'seed-jessica', name:'Jessica', team:'recepcao', role:'Integrante'},
+  {id:'seed-sueli', name:'Sueli', team:'cuidado', role:'Líder'},
+  {id:'seed-eliane-sales', name:'Eliane Sales', team:'cuidado', role:'Adjunto'},
+  {id:'seed-cleide-melo', name:'Cleide Melo', team:'cuidado', role:'Integrante'},
+  {id:'seed-karina', name:'Karina', team:'cuidado', role:'Integrante'},
+  {id:'seed-odete', name:'Odete', team:'cuidado', role:'Integrante'},
+  {id:'seed-abraao', name:'Abraão', team:'cuidado', role:'Integrante'},
+  {id:'seed-cinara', name:'Cinara', team:'cuidado', role:'Integrante'},
+  {id:'seed-ismael', name:'Ismael', team:'cuidado', role:'Integrante'},
+  {id:'seed-robson', name:'Robson', team:'cuidado', role:'Integrante'},
+  {id:'seed-jaqueline', name:'Jaqueline', team:'consolidacao', role:'Líder'},
+  {id:'seed-lilian-cerqueira', name:'Lilian Cerqueira', team:'consolidacao', role:'Integrante'},
+  {id:'seed-danilo-consolidacao', name:'Danilo', team:'consolidacao', role:'Integrante'},
+  {id:'seed-giulia-sales', name:'Giulia Sales', team:'consolidacao', role:'Integrante'},
+  {id:'seed-isabelle', name:'Isabelle', team:'consolidacao', role:'Integrante'},
+  {id:'seed-isabelle-aylon', name:'Isabelle Aylon', team:'consolidacao', role:'Integrante'},
+  {id:'seed-lilian-reberte', name:'Lilian Reberte', team:'consolidacao', role:'Integrante'},
+  {id:'seed-michelle-cople-consolidacao', name:'Michelle Cople', team:'consolidacao', role:'Integrante'},
+  {id:'seed-tatiane-consolidacao', name:'Tatiane', team:'consolidacao', role:'Integrante'},
+  {id:'seed-marcos-jr', name:'Marcos Jr.', team:'consolidacao', role:'Integrante'},
+  {id:'seed-richard', name:'Richard', team:'consolidacao', role:'Integrante'},
+  {id:'seed-taiane', name:'Taiane', team:'inchurch', role:'Líder'},
+  {id:'seed-marjorie-inchurch', name:'Marjorie', team:'inchurch', role:'Adjunto'},
+  {id:'seed-giovanna-sales', name:'Giovanna Sales', team:'inchurch', role:'Integrante'},
+  {id:'seed-mirian-inchurch', name:'Mirian', team:'inchurch', role:'Integrante'},
+  {id:'seed-patricia-inchurch', name:'Patricia', team:'inchurch', role:'Integrante'},
+  {id:'seed-isac', name:'Isac', team:'inchurch', role:'Integrante'},
+  {id:'seed-pastor-gessi', name:'Pastor Gessi', team:'discipulado', role:'Líder'},
+  {id:'seed-pastor-altair', name:'Pastor Altair Mesquita', team:'discipulado', role:'Adjunto'},
+  {id:'seed-pastor-edson-sales', name:'Pastor Edson Sales', team:'discipulado', role:'Adjunto'},
+  {id:'seed-pastor-paulo-marcio', name:'Pastor Paulo Marcio', team:'discipulado', role:'Adjunto'},
+  {id:'seed-pastor-manuel', name:'Pastor Manuel', team:'discipulado', role:'Adjunto'},
+  {id:'seed-amanda-aylon', name:'Amanda Aylon', team:'coordenacao', role:'Líder'},
+  {id:'seed-suelem-almeida-cunha', name:'Suelem de Almeida Cunha', team:'coordenacao', role:'Adjunto'},
+  {id:'seed-pastor-paulo-marcio-coord', name:'Pastor Paulo Marcio', team:'coordenacao', role:'Integrante'},
+  {id:'seed-pastor-edson-sales-coord', name:'Pastor Edson Sales', team:'coordenacao', role:'Integrante'},
+];
+async function loadRoster(){
+  try{
+    const r = await window.storage.get('ibnv-roster', true);
+    let current = r ? JSON.parse(r.value) : [];
+    const existingIds = new Set(current.map(m=>m.id));
+    const toAdd = SEED_ROSTER.filter(s=>!existingIds.has(s.id));
+    if(toAdd.length){
+      current = current.concat(toAdd);
+    }
+    current = current.map(m=>({senha:'', ...m}));
+    if(toAdd.length || !r){
+      await window.storage.set('ibnv-roster', JSON.stringify(current), true);
+    }
+    return current;
+  }
+  catch(e){ return SEED_ROSTER.map(m=>({senha:'', ...m})); }
+}
+async function saveRoster(list){
+  try{ await window.storage.set('ibnv-roster', JSON.stringify(list), true); }
+  catch(e){ console.error('Erro ao salvar equipe', e); }
+}
+const SEED_PEOPLE = [];
+const REMOVED_SEED_IDS = ['seed-pessoa-05'];
+async function loadPeople(){
+  try{
+    const r = await window.storage.get('ibnv-people', true);
+    let current = r ? JSON.parse(r.value) : [];
+    let changed = false;
+    const antes = current.length;
+    current = current.filter(p=>!REMOVED_SEED_IDS.includes(p.id));
+    if(current.length!==antes) changed = true;
+    SEED_PEOPLE.forEach(s=>{
+      const ex = current.find(p=>p.id===s.id);
+      if(!ex){ current.push(s); changed = true; }
+      else if(ex.seedV!==s.seedV){
+        ex.nome = s.nome; ex.telefone = s.telefone; ex.criadoEm = s.criadoEm;
+        ex.coordenacao = ex.coordenacao || {};
+        ex.coordenacao.observacao = s.coordenacao.observacao;
+        ex.seedV = s.seedV; changed = true;
+      }
+    });
+    if(changed) await window.storage.set('ibnv-people', JSON.stringify(current), true);
+    return current;
+  }
+  catch(e){ return SEED_PEOPLE.slice(); }
+}
+async function savePeople(list){
+  try{ await window.storage.set('ibnv-people', JSON.stringify(list), true); }
+  catch(e){ console.error('Erro ao salvar pessoas', e); }
+}
+const DEFAULT_COORD_PASSCODE = 'Conectar@2026';
+const PASSCODE_RESET_TOKEN = '2026-10-15';
+async function safeGet(k){
+  try{ return await window.storage.get(k, true); }catch(e){ return null; }
+}
+async function loadPasscode(){
+  try{
+    const t = await safeGet('ibnv-coord-reset');
+    if(!t || t.value !== PASSCODE_RESET_TOKEN){
+      await window.storage.set('ibnv-coord-passcode', DEFAULT_COORD_PASSCODE, true);
+      await window.storage.set('ibnv-coord-reset', PASSCODE_RESET_TOKEN, true);
+      return DEFAULT_COORD_PASSCODE;
+    }
+    const r = await safeGet('ibnv-coord-passcode');
+    if(r && r.value) return String(r.value);
+    await window.storage.set('ibnv-coord-passcode', DEFAULT_COORD_PASSCODE, true);
+    return DEFAULT_COORD_PASSCODE;
+  }
+  catch(e){ return DEFAULT_COORD_PASSCODE; }
+}
+async function savePasscode(pw){
+  try{ await window.storage.set('ibnv-coord-passcode', pw, true); }
+  catch(e){ console.error('Erro ao salvar senha', e); }
+}
+
+const DEFAULT_MEMBER_PASSCODE = 'Equipe@2026';
+async function loadMemberPasscode(){
+  try{
+    const r = await safeGet('ibnv-member-passcode');
+    if(r && r.value) return String(r.value);
+    await window.storage.set('ibnv-member-passcode', DEFAULT_MEMBER_PASSCODE, true);
+    return DEFAULT_MEMBER_PASSCODE;
+  }
+  catch(e){ return DEFAULT_MEMBER_PASSCODE; }
+}
+async function saveMemberPasscode(pw){
+  try{ await window.storage.set('ibnv-member-passcode', pw, true); }
+  catch(e){ console.error('Erro ao salvar senha padrão', e); }
+}
+
+async function loadKids(){
+  try{ const r = await safeGet('ibnv-kids'); return r && r.value ? JSON.parse(r.value) : []; }
+  catch(e){ return []; }
+}
+async function saveKids(list){
+  try{ await window.storage.set('ibnv-kids', JSON.stringify(list), true); }
+  catch(e){ console.error('Erro ao salvar Kids', e); }
+}
+async function loadKidsChecks(){
+  try{ const r = await safeGet('ibnv-kids-checks'); return r && r.value ? JSON.parse(r.value) : []; }
+  catch(e){ return []; }
+}
+async function saveKidsChecks(list){
+  try{ await window.storage.set('ibnv-kids-checks', JSON.stringify(list), true); }
+  catch(e){ console.error('Erro ao salvar checklists Kids', e); }
+}
+
+/* ---------- Estado (em memória — sem localStorage/sessionStorage) ---------- */
+const TEAMS = [
+  {key:'recepcao', label:'Recepção/Acolhimento'},
+  {key:'consolidacao', label:'Consolidação'},
+  {key:'discipulado', label:'Discipulado'},
+  {key:'cuidado', label:'Cuidado'},
+  {key:'kids', label:'Kids'},
+  {key:'diaconato', label:'Diaconato'},
+  {key:'inchurch', label:'InChurch/Gestão'},
+  {key:'coordenacao', label:'Coordenação'},
+];
+const teamLabel = k => (TEAMS.find(t=>t.key===k)||{}).label || k;
+
+let currentUser = null; // { role:'coordenacao' } ou { role:'membro', name, team }
+let roster = [];
+let people = [];
+let activeTab = 'painel';
+let expandedId = null;
+let searchTerm = '';
+let filterAlerta = 'todos';
+let onlyPendencias = false;
+
+const app = document.getElementById('app');
+const whoBox = document.getElementById('whoBox');
+const whoLabel = document.getElementById('whoLabel');
+
+function fmtDate(d){ if(!d) return '—'; const dt=new Date(d); return dt.toLocaleDateString('pt-BR'); }
+function daysSince(d){ if(!d) return null; const ms = Date.now() - new Date(d).getTime(); return Math.floor(ms/86400000); }
+const SEV = {verde:0, amarelo:1, laranja:2, vermelho:3};
+
+function ausenciaNivel(dias){
+  if(dias===null) return 'verde';
+  if(dias>=60) return 'vermelho';
+  if(dias>=30) return 'laranja';
+  if(dias>=15) return 'amarelo';
+  return 'verde';
+}
+function necessidadeNivel(n){
+  return {Nenhuma:'verde', Leve:'amarelo', Relevante:'laranja', Grave:'vermelho'}[n] || 'verde';
+}
+function pessoaAlerta(p){
+  const datas = [p.cuidado.ultimaParticipacao, p.cuidado.ultimoContato, p.consolidacao.ultimoContato, p.discipulado.ultimoEncontro, p.criadoEm]
+    .filter(Boolean).map(d=>new Date(d).getTime());
+  const maisRecente = datas.length ? new Date(Math.max(...datas)) : new Date(p.criadoEm);
+  const dias = daysSince(maisRecente);
+  const nAus = ausenciaNivel(dias);
+  const nNec = necessidadeNivel(p.cuidado.necessidade);
+  return SEV[nAus] >= SEV[nNec] ? nAus : nNec;
+}
+function pessoaPendencias(p){
+  const pend = [];
+  const diasCriacao = daysSince(p.criadoEm);
+  if(p.status==='Visitante' && !p.consolidacao.ultimoContato && diasCriacao!==null && diasCriacao>2)
+    pend.push('Visitante sem contato após 48h');
+  if(pessoaAlerta(p)==='vermelho' && !p.cuidado.encaminhamentoPastoral)
+    pend.push('Alerta vermelho sem encaminhamento pastoral');
+  ['consolidacao','discipulado','cuidado'].forEach(sec=>{
+    if(p[sec].prazo && new Date(p[sec].prazo) < new Date())
+      pend.push('Prazo vencido — '+teamLabel(sec));
+  });
+  if(p.status==='Em discipulado'){
+    const d = daysSince(p.discipulado.ultimoEncontro);
+    if(d!==null && d>30) pend.push('Discipulado sem atualização há 30+ dias');
+  }
+  return pend;
+}
+
+/* ---------- Discipulador e liderança ---------- */
+function normName(s){
+  return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
+    .replace(/\b(pastor|pastora|pr|pra)\b\.?/g,' ').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+}
+function isMine(p){
+  if(!currentUser || currentUser.role!=='discipulador') return true;
+  const a = normName(p.discipulado && p.discipulado.discipulador);
+  const b = normName(currentUser.name);
+  if(!a || !b) return false;
+  return a===b || a.includes(b) || b.includes(a);
+}
+function casoReservado(p){
+  return !!((p.cuidado && (p.cuidado.encaminhamentoPastoral || p.cuidado.sigiloCoordenacao)) ||
+            (p.coordenacao && p.coordenacao.encaminhamentoPastoral));
+}
+function isDiaconatoUser(){
+  return !!currentUser && currentUser.role==='membro' && currentUser.team==='diaconato';
+}
+function visiblePeople(){
+  if(isDiaconatoUser()) return people.filter(p=>!casoReservado(p));
+  return people.filter(isMine);
+}
+function isIntegranteNivel(){
+  return !!currentUser && currentUser.role==='membro' && (currentUser.nivel||'Integrante')==='Integrante';
+}
+function nomeTravado(p){
+  return isIntegranteNivel() && !!(p.nome && String(p.nome).trim());
+}
+function isLeaderNivel(){
+  return !!currentUser && currentUser.role==='membro' && (currentUser.nivel==='Líder' || currentUser.nivel==='Adjunto');
+}
+function isDiscipuladorEligible(r){ return r.team==='discipulado' || r.discipulador===true; }
+
+/* ---------- Permissões ---------- */
+function myTeamKey(){
+  if(!currentUser) return null;
+  return currentUser.role==='coordenacao' ? 'coordenacao' : currentUser.team;
+}
+function canManageRoster(){ return currentUser && currentUser.role==='coordenacao'; }
+function canCreatePessoa(){
+  const t = myTeamKey();
+  return t==='recepcao' || t==='inchurch' || t==='coordenacao';
+}
+function canDeletePessoa(){
+  const t = myTeamKey();
+  return t==='inchurch' || t==='coordenacao';
+}
+function canEditSection(sectionKey){
+  const t = myTeamKey();
+  if(t==='inchurch' || t==='coordenacao') return true;
+  if(sectionKey==='basico') return t==='recepcao';
+  return t===sectionKey;
+}
+function canUploadFormFor(teamKey){
+  if(!currentUser) return false;
+  if(currentUser.role==='coordenacao') return true;
+  if(currentUser.team==='inchurch') return true;
+  if(currentUser.team===teamKey && (currentUser.nivel==='Líder' || currentUser.nivel==='Adjunto')) return true;
+  return false;
+}
+
+/* ---------- Pessoa vazia ---------- */
+function novaPessoa(criadoPor){
+  return {
+    id: 'p'+Date.now()+Math.floor(Math.random()*1000),
+    nome:'', telefone:'', autorizaContato:true,
+    status:'Visitante', criadoEm: new Date().toISOString(), criadoPor,
+    consolidacao:{ultimoContato:null, responsavel:'', proximoPasso:'', prazo:null},
+    discipulado:{discipulador:'', ultimoEncontro:null, proximoPasso:'', prazo:null},
+    cuidado:{necessidade:'Nenhuma', descricaoNecessidade:'', sigiloCoordenacao:false, ultimaParticipacao:null, ultimoContato:null, encaminhamentoPastoral:false, responsavel:'', proximoPasso:'', prazo:null},
+    coordenacao:{observacao:'', encaminhamentoPastoral:false},
+  };
+}
+
+/* ---------- Render raiz ---------- */
+async function boot(){
+  roster = await loadRoster();
+  people = await loadPeople();
+  render();
+}
+function render(){
+  if(!currentUser){ whoBox.style.display='none'; renderLogin(); return; }
+  whoBox.style.display='inline-flex';
+  whoLabel.textContent = currentUser.role==='coordenacao'
+    ? 'Coordenação'
+    : currentUser.role==='discipulador'
+      ? (currentUser.name+' — Discipulador')
+      : (currentUser.name+' — '+teamLabel(currentUser.team)+(currentUser.nivel?' · '+currentUser.nivel:''));
+  renderMain();
+}
+function logout(){ currentUser = null; activeTab='painel'; expandedId=null; render(); }
+
+/* ---------- LOGIN ---------- */
+function loginCandidates(mode){
+  if(mode==='lider') return roster.filter(r=>r.role==='Líder' || r.role==='Adjunto');
+  if(mode==='discipulador') return roster.filter(isDiscipuladorEligible);
+  if(mode==='kids') return roster.filter(r=>r.team==='kids');
+  if(mode==='diaconato') return roster.filter(r=>r.team==='diaconato');
+  return roster;
+}
+function renderRosterLogin(mode, wrap, card){
+  const titles = {membro:'Entrar como integrante', lider:'Entrar como Líder ou Adjunto', discipulador:'Entrar como Discipulador', kids:'Entrar como Kids', diaconato:'Entrar como Diaconato'};
+  const cand = loginCandidates(mode);
+  if(cand.length===0){
+    card.innerHTML = `
+      <h2>${titles[mode]}</h2>
+      <p class="hint">Ainda não há ninguém cadastrado para este acesso. Peça à Coordenação para te cadastrar em Gestão de Equipe.</p>
+      <div style="margin-top:16px;"><button class="btn btn-outline" id="back">Voltar</button></div>`;
+    wrap.appendChild(card); app.appendChild(wrap);
+    document.getElementById('back').onclick = ()=>renderLogin();
+    return;
+  }
+  const optgroups = TEAMS.map(t=>{
+    const members = cand.filter(r=>r.team===t.key);
+    if(members.length===0) return '';
+    return `<optgroup label="${t.label}">`+members.map(r=>`<option value="${r.id}">${esc(r.name)}${r.role?' — '+esc(r.role):''}</option>`).join('')+`</optgroup>`;
+  }).join('');
+  card.innerHTML = `
+    <h2>${titles[mode]}</h2>
+    <p class="hint">Escolha seu nome e digite sua senha. Se a Coordenação ainda não definiu uma senha só sua, use a senha padrão que ela te passou.</p>
+    <label>Seu nome</label>
+    <select id="nameSelect"><option value="">Selecione...</option>${optgroups}</select>
+    <label>Sua senha</label>
+    <input type="password" id="memberPassword">
+    <div id="err" class="error-text"></div>
+    <div style="margin-top:16px;display:flex;gap:10px;">
+      <button class="btn btn-primary" id="doLogin">Entrar</button>
+      <button class="btn btn-outline" id="back">Voltar</button>
+    </div>`;
+  wrap.appendChild(card); app.appendChild(wrap);
+  document.getElementById('back').onclick = ()=>renderLogin();
+  document.getElementById('memberPassword').addEventListener('keydown', ev=>{ if(ev.key==='Enter') document.getElementById('doLogin').click(); });
+  document.getElementById('doLogin').onclick = async ()=>{
+    const id = document.getElementById('nameSelect').value;
+    const senha = document.getElementById('memberPassword').value.trim();
+    const found = roster.find(r=>r.id===id);
+    const err = document.getElementById('err');
+    if(!found){ err.textContent = 'Selecione um nome da lista.'; return; }
+    const esperado = found.senha ? String(found.senha).trim() : String(await loadMemberPasscode()).trim();
+    if(senha !== esperado){ err.textContent = 'Senha incorreta.'; return; }
+    if(mode==='discipulador'){
+      currentUser = {role:'discipulador', name:found.name, team:'discipulado', nivel:'Discipulador'};
+    } else {
+      currentUser = {role:'membro', name:found.name, team:found.team, nivel:found.role||'Integrante', via:mode};
+    }
+    activeTab = (currentUser.role==='membro' && currentUser.team==='kids') ? 'kids' : (currentUser.role==='membro' && currentUser.team==='diaconato') ? 'diaconato' : 'painel';
+    render();
+  };
+}
+
+
+function renderLogin(mode){
+  app.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.className = 'center-wrap';
+  const card = document.createElement('div');
+  card.className = 'card login-card';
+
+  if(!mode){
+    card.innerHTML = `
+      <h2>Quem está entrando?</h2>
+      <p class="hint">Acolher · Conectar · Discipular · Cuidar · Servir</p>
+      <div class="login-choice">
+        <button id="btnMembro"><b>Sou integrante de uma equipe</b>Recepção, Consolidação, Discipulado, Cuidado ou InChurch/Gestão</button>
+        <button id="btnLider"><b>Sou Líder ou Adjunto</b>Acesso da liderança da minha equipe</button>
+        <button id="btnDisc"><b>Sou Discipulador</b>Acompanho as pessoas que discipulo</button>
+        <button id="btnKids"><b>Sou do Kids</b>Acolhimento da criança e da família</button>
+        <button id="btnDiac"><b>Sou do Diaconato</b>Diáconos e liderança do diaconato</button>
+        <button id="btnCoord"><b>Sou da Coordenação</b>Cadastra as equipes e tem acesso completo</button>
+      </div>`;
+    wrap.appendChild(card); app.appendChild(wrap);
+    document.getElementById('btnMembro').onclick = ()=>renderLogin('membro');
+    document.getElementById('btnLider').onclick = ()=>renderLogin('lider');
+    document.getElementById('btnKids').onclick = ()=>renderLogin('kids');
+    document.getElementById('btnDiac').onclick = ()=>renderLogin('diaconato');
+    document.getElementById('btnDisc').onclick = ()=>renderLogin('discipulador');
+    document.getElementById('btnCoord').onclick = async ()=>{
+      const pw = await loadPasscode();
+      renderLogin(pw ? 'coord' : 'coord-setup');
+    };
+    return;
+  }
+
+  if(mode==='membro' || mode==='lider' || mode==='discipulador' || mode==='kids' || mode==='diaconato'){
+    renderRosterLogin(mode, wrap, card);
+    return;
+  }
+
+  if(mode==='coord-setup'){
+    card.innerHTML = `
+      <h2>Definir senha da Coordenação</h2>
+      <p class="hint">Ninguém ainda definiu uma senha de acesso da Coordenação. Crie uma agora (mínimo 4 caracteres). Isso apenas organiza o acesso dentro da página — não é uma proteção de segurança real, então combine essa senha só com quem for da Coordenação.</p>
+      <label>Nova senha</label>
+      <input type="password" id="pw1">
+      <label>Confirmar senha</label>
+      <input type="password" id="pw2">
+      <div id="err" class="error-text"></div>
+      <div style="margin-top:16px;display:flex;gap:10px;">
+        <button class="btn btn-primary" id="doSet">Salvar e entrar</button>
+        <button class="btn btn-outline" id="back">Voltar</button>
+      </div>`;
+    wrap.appendChild(card); app.appendChild(wrap);
+    document.getElementById('back').onclick = ()=>renderLogin();
+    document.getElementById('doSet').onclick = async ()=>{
+      const a = document.getElementById('pw1').value;
+      const b = document.getElementById('pw2').value;
+      if(a.length<4){ document.getElementById('err').textContent='Use ao menos 4 caracteres.'; return; }
+      if(a!==b){ document.getElementById('err').textContent='As senhas não coincidem.'; return; }
+      await savePasscode(a);
+      currentUser = {role:'coordenacao'};
+      activeTab='equipe';
+      render();
+    };
+    return;
+  }
+
+  if(mode==='coord'){
+    card.innerHTML = `
+      <h2>Entrar como Coordenação</h2>
+      <label>Senha de acesso</label>
+      <input type="password" id="pwInput">
+      <div id="err" class="error-text"></div>
+      <div style="margin-top:16px;display:flex;gap:10px;">
+        <button class="btn btn-primary" id="doLogin">Entrar</button>
+        <button class="btn btn-outline" id="back">Voltar</button>
+      </div>`;
+    wrap.appendChild(card); app.appendChild(wrap);
+    document.getElementById('back').onclick = ()=>renderLogin();
+    document.getElementById('pwInput').addEventListener('keydown', ev=>{ if(ev.key==='Enter') document.getElementById('doLogin').click(); });
+    document.getElementById('doLogin').onclick = async ()=>{
+      const pw = document.getElementById('pwInput').value;
+      const real = await loadPasscode();
+      if(pw.trim() !== String(real).trim()){ document.getElementById('err').textContent='Senha incorreta.'; return; }
+      currentUser = {role:'coordenacao'};
+      activeTab='painel';
+      render();
+    };
+  }
+}
+
+/* ---------- MAIN APP ---------- */
+function renderMain(){
+  app.innerHTML = '';
+  const tabsWrap = document.createElement('nav');
+  tabsWrap.className = 'tabs';
+  const tabs = [];
+  tabs.push({key:'painel', label:'Painel'});
+  tabs.push({key:'pessoas', label:'Pessoas'});
+  if(myTeamKey()!=='diaconato') tabs.push({key:'formulario', label:'Formulário'});
+  if(canSeeReport()) tabs.push({key:'relatorio', label:'Relatório diário'});
+  if(isLeaderNivel()) tabs.push({key:'minhaequipe', label:'Minha equipe'});
+  if(canSeeKids()) tabs.push({key:'kids', label:'Kids'});
+  if(canSeeDiaconato()) tabs.push({key:'diaconato', label:'Diaconato'});
+  if(canManageRoster()) tabs.push({key:'equipe', label:'Gestão de Equipe'});
+  if(canManageRoster() || isLeaderNivel()) tabs.push({key:'organograma', label:'Organograma'});
+  if(canManageRoster()) tabs.push({key:'config', label:'Configurações'});
+  if(isKidsOnly()) tabs.splice(0, tabs.length, {key:'kids', label:'Kids'});
+  if(!tabs.some(t=>t.key===activeTab)) activeTab = tabs[0].key;
+  tabs.forEach(t=>{
+    const b = document.createElement('button');
+    b.textContent = t.label;
+    if(activeTab===t.key) b.className='active';
+    b.onclick = ()=>{ activeTab=t.key; expandedId=null; renderMain(); };
+    tabsWrap.appendChild(b);
+  });
+  app.appendChild(tabsWrap);
+
+  const content = document.createElement('div');
+  content.id = 'tabContent';
+  app.appendChild(content);
+
+  if(activeTab==='painel') renderPainel(content);
+  else if(activeTab==='pessoas') renderPessoas(content);
+  else if(activeTab==='formulario') renderFormulario(content);
+  else if(activeTab==='relatorio' && canSeeReport()) renderRelatorio(content);
+  else if(activeTab==='minhaequipe' && isLeaderNivel()) renderMinhaEquipe(content);
+  else if(activeTab==='kids' && canSeeKids()) renderKids(content);
+  else if(activeTab==='diaconato' && canSeeDiaconato()) renderDiaconato(content);
+  else if(activeTab==='equipe' && canManageRoster()) renderEquipe(content);
+  else if(activeTab==='organograma' && (canManageRoster() || isLeaderNivel())) renderOrganograma(content);
+  else if(activeTab==='config' && canManageRoster()) renderConfig(content);
+}
+
+/* ---------- KIDS ---------- */
+let kids = [], kidsChecks = [], kidsLoaded = false;
+let kidsView = 'visitantes', kidsSearch = '', kidsFilter = 'todos', kidsExpanded = null;
+let kidsFormId = null, kidWork = null;
+const KIDS_DESTINOS = ['Em acompanhamento','Retornou ao Kids','Integração','Discipulado','Visitante eventual','Outra igreja','Sem retorno'];
+const KIDS_ESPECIAIS = ['Autismo (TEA)','TDAH','Deficiência física','Deficiência intelectual','Dificuldade de fala/comunicação'];
+const KIDS_COMUNICA = ['Fala','Fala pouco','Gestos','Figuras/cartões'];
+const KIDS_INCOMODA = ['Barulho alto','Luz forte','Toque/abraço','Multidão','Mudança de rotina','Cheiros','Texturas/roupas'];
+const KIDS_CHECKLIST = [
+  'Todas as crianças visitantes foram acolhidas e entregues aos responsáveis?',
+  'Famílias visitantes foram identificadas?',
+  'Autorizações de contato dos responsáveis foram respeitadas?',
+  'Informações de saúde ou regulação foram registradas com reserva e seguem o Protocolo de Regulação KIDS?',
+  'Os dados das famílias chegaram à Recepção e à Consolidação?',
+  'Pedidos de oração dos pais ou das crianças foram encaminhados corretamente?',
+  'Cada família que exige próximo passo tem responsável?',
+  'Há algum caso que precisa subir à liderança do Kids ou à liderança pastoral?'
+];
+function canSeeKids(){
+  return !!currentUser && (currentUser.role==='coordenacao' || (currentUser.role==='membro' && currentUser.team==='kids'));
+}
+function isKidsOnly(){
+  return !!currentUser && currentUser.role==='membro' && currentUser.team==='kids';
+}
+function hojeKey(){ return localDayKey(new Date()); }
+function quemSou(){ return currentUser && currentUser.role==='coordenacao' ? 'Coordenação' : (currentUser ? currentUser.name : ''); }
+function idadeDe(nasc){
+  if(!nasc) return '';
+  const n = new Date(nasc+'T12:00:00'); if(isNaN(n)) return '';
+  const h = new Date();
+  let anos = h.getFullYear()-n.getFullYear();
+  let meses = h.getMonth()-n.getMonth();
+  if(h.getDate()<n.getDate()) meses--;
+  if(meses<0){ anos--; meses += 12; }
+  if(anos<0) return '';
+  return anos<2 ? (anos*12+meses)+' meses' : anos+' anos';
+}
+function novaKid(){
+  const hoje = hojeKey();
+  return {
+    id:'k'+Date.now()+Math.floor(Math.random()*1000), criadoEm:new Date().toISOString(), criadoPor:quemSou(),
+    visita:{data:hoje},
+    crianca:{nome:'', nascimento:'', apelido:''},
+    responsavel:{nome:'', telefone:'', parentesco:'', autorizadoBuscar:''},
+    saude:{alergias:'', restricao:'', medicacao:'', banheiro:'', outro:''},
+    especiais:{opcoes:[], outra:'', comunicacao:[], comunicacaoOutro:''},
+    regulacao:{incomoda:[], incomodaOutro:'', acalma:'', sinais:'', fazerEvitar:'', objetoTem:'', objeto:'', gostos:''},
+    autorizacoes:{contato:false, fotos:false, usoInformacoes:false, assinada:false, assinadoEm:''},
+    equipe:{recebidaPor:quemSou(), recebidaEm:hoje, liderancaInformada:false},
+    acompanhamento:{destino:'Em acompanhamento', contatoData:'', contatoPor:'', observacao:''},
+    bastao:{enviado:false, pessoaId:'', em:''}
+  };
+}
+function kidGet(k,path){ return path.split('.').reduce((o,key)=>o==null?o:o[key],k); }
+function kidSet(k,path,val){
+  const a = path.split('.'); let o = k;
+  for(let i=0;i<a.length-1;i++) o = o[a[i]];
+  o[a[a.length-1]] = val;
+}
+function kidTemAtencao(k){
+  const s=k.saude, e=k.especiais, r=k.regulacao;
+  return !!(s.alergias||s.restricao||s.medicacao==='Sim'||(s.banheiro&&s.banheiro!=='Não')||s.outro||
+    e.opcoes.length||e.outra||r.incomoda.length||r.incomodaOutro||r.acalma||r.sinais||r.fazerEvitar);
+}
+function kidChips(k){
+  const c=[], s=k.saude, e=k.especiais, r=k.regulacao;
+  if(s.alergias) c.push('Alergia');
+  if(s.restricao) c.push('Restrição alimentar');
+  if(s.medicacao==='Sim') c.push('Medicação no culto');
+  if(s.banheiro && s.banheiro!=='Não') c.push(s.banheiro==='Usa fralda'?'Fralda':'Ajuda no banheiro');
+  if(e.opcoes.length||e.outra) c.push('Necessidade especial');
+  if(r.incomoda.length||r.incomodaOutro||r.acalma||r.sinais||r.fazerEvitar) c.push('Regulação');
+  return c;
+}
+function kidPendencias(k){
+  const p=[];
+  if(!k.bastao.enviado) p.push('Passagem de bastão à Recepção/Consolidação não registrada');
+  const dias = daysSince(k.visita.data ? k.visita.data+'T12:00:00' : k.criadoEm);
+  if(k.bastao.enviado && k.autorizacoes.contato && !k.acompanhamento.contatoData && dias!==null && dias>2)
+    p.push('Sem contato com a família após 48h');
+  if(kidTemAtencao(k) && !k.equipe.liderancaInformada) p.push('Saúde/regulação ainda não passada à liderança do Kids');
+  if(kidTemAtencao(k) && !k.autorizacoes.usoInformacoes) p.push('Autorização de uso das informações não marcada');
+  return p;
+}
+async function ensureKids(force){
+  if(!kidsLoaded || force){ kids = await loadKids(); kidsChecks = await loadKidsChecks(); kidsLoaded = true; }
+}
+async function renderKids(content){
+  if(!canSeeKids()){ content.innerHTML=''; return; }
+  content.innerHTML = '<div class="empty-note">Carregando...</div>';
+  await ensureKids();
+  drawKids(content);
+}
+function drawKids(content){
+  const subs = [['visitantes','Visitantes Kids'],['checklist','Checklist pós-culto'],['guia','Roteiros e guia']];
+  content.innerHTML = `
+    <div class="banner">Dados de crianças e famílias: acesso restrito à equipe do Kids e à Coordenação, usados só para acolhimento e cuidado. Não compartilhe prints, fotos ou mensagens com informações desta área.</div>
+    <nav class="tabs">${subs.map(s=>`<button data-sub="${s[0]}" class="${kidsView===s[0]?'active':''}">${s[1]}</button>`).join('')}</nav>
+    <div id="kidsBody"></div>`;
+  content.querySelectorAll('[data-sub]').forEach(b=>{ b.onclick = ()=>{ kidsView = b.getAttribute('data-sub'); kidsFormId = null; kidWork = null; drawKids(content); }; });
+  const body = content.querySelector('#kidsBody');
+  if(kidsView==='visitantes') renderKidsVisitantes(body, content);
+  else if(kidsView==='checklist') renderKidsChecklist(body);
+  else renderKidsGuia(body);
+}
+function renderKidsVisitantes(body, content){
+  if(kidsFormId){ renderKidForm(body, content); return; }
+  const total = kids.length;
+  const comPend = kids.filter(k=>kidPendencias(k).length).length;
+  const atencao = kids.filter(kidTemAtencao).length;
+  const semBastao = kids.filter(k=>!k.bastao.enviado).length;
+  body.innerHTML = `
+    <div class="stat-row">
+      <div class="stat"><div class="num">${total}</div><div class="lbl">Crianças registradas</div></div>
+      <div class="stat"><div class="num">${atencao}</div><div class="lbl">Com atenção especial</div></div>
+      <div class="stat"><div class="num">${semBastao}</div><div class="lbl">Sem passagem de bastão</div></div>
+      <div class="stat"><div class="num">${comPend}</div><div class="lbl">Com pendências</div></div>
+    </div>
+    <div class="toolbar">
+      <button class="btn btn-primary" id="kAdd">+ Nova Ficha de Especificidades</button>
+      <input type="text" id="kSearch" placeholder="Buscar criança ou responsável..." value="${esc(kidsSearch)}">
+      <select id="kFilter">
+        <option value="todos">Todas</option><option value="pendencias">Com pendências</option><option value="atencao">Com atenção especial</option>
+      </select>
+      <button class="btn btn-outline btn-small" id="kRefresh">Atualizar</button>
+    </div>
+    <div id="kidsList"></div>`;
+  body.querySelector('#kFilter').value = kidsFilter;
+  body.querySelector('#kAdd').onclick = ()=>{ kidWork = novaKid(); kidsFormId = 'new'; drawKids(content); };
+  body.querySelector('#kSearch').oninput = e=>{ kidsSearch = e.target.value; renderKidsList(body.querySelector('#kidsList'), content); };
+  body.querySelector('#kFilter').onchange = e=>{ kidsFilter = e.target.value; renderKidsList(body.querySelector('#kidsList'), content); };
+  body.querySelector('#kRefresh').onclick = async ()=>{ await ensureKids(true); drawKids(content); };
+  renderKidsList(body.querySelector('#kidsList'), content);
+}
+function renderKidsList(listEl, content){
+  const q = normName(kidsSearch);
+  const items = kids.filter(k=>{
+    if(q && !(normName(k.crianca.nome).includes(q) || normName(k.responsavel.nome).includes(q))) return false;
+    if(kidsFilter==='pendencias' && !kidPendencias(k).length) return false;
+    if(kidsFilter==='atencao' && !kidTemAtencao(k)) return false;
+    return true;
+  }).sort((a,b)=>(b.visita.data||'').localeCompare(a.visita.data||''));
+  if(!items.length){ listEl.innerHTML = '<div class="empty-note">Nenhuma criança encontrada.</div>'; return; }
+  listEl.innerHTML = '';
+  items.forEach(k=>{
+    const pend = kidPendencias(k);
+    const idade = idadeDe(k.crianca.nascimento);
+    const row = document.createElement('div'); row.className = 'person-row';
+    row.innerHTML = `
+      <div class="person-head">
+        <div>
+          <div class="name">${esc(k.crianca.nome||'(sem nome)')}${k.crianca.apelido?' <span class="hint">('+esc(k.crianca.apelido)+')</span>':''}</div>
+          <div class="meta">${idade?esc(idade)+' · ':''}Responsável: ${esc(k.responsavel.nome||'—')} · visita ${k.visita.data?fmtDayBR(k.visita.data):'—'} · ${esc(k.acompanhamento.destino)}</div>
+          <div>${kidChips(k).map(c=>'<span class="chip">'+esc(c)+'</span>').join('')}</div>
+          ${pend.length?'<div class="flag">'+esc(pend.join(' · '))+'</div>':''}
+        </div>
+        <span class="pill">${kidsExpanded===k.id?'fechar ▲':'abrir ▼'}</span>
+      </div>
+      <div class="person-body ${kidsExpanded===k.id?'open':''}"></div>`;
+    listEl.appendChild(row);
+    row.querySelector('.person-head').onclick = ()=>{ kidsExpanded = kidsExpanded===k.id ? null : k.id; renderKidsList(listEl, content); };
+    if(kidsExpanded===k.id) renderKidDetail(row.querySelector('.person-body'), k, listEl, content);
+  });
+}
+function kfield(k,label,path,type,full){
+  const v = kidGet(k,path)||'';
+  if(type==='textarea') return `<div class="full"><label>${label}</label><textarea data-k="${path}">${esc(v)}</textarea></div>`;
+  return `<div class="${full?'full':''}"><label>${label}</label><input type="${type||'text'}" data-k="${path}" value="${esc(v)}"></div>`;
+}
+function ksel(k,label,path,options){
+  const v = kidGet(k,path)||'';
+  return `<div><label>${label}</label><select data-k="${path}">${options.map(o=>`<option value="${esc(o)}" ${v===o?'selected':''}>${o||'—'}</option>`).join('')}</select></div>`;
+}
+function kchk(k,path,options){
+  const arr = kidGet(k,path)||[];
+  return options.map(o=>`<label class="checkline" style="margin-top:6px;"><input type="checkbox" data-arr="${path}" value="${esc(o)}" ${arr.includes(o)?'checked':''}> ${esc(o)}</label>`).join('');
+}
+function kbool(k,label,path){
+  return `<label class="checkline"><input type="checkbox" data-k="${path}" data-bool="1" ${kidGet(k,path)?'checked':''}> ${label}</label>`;
+}
+function kidMsg(tipo,k){
+  const resp = k.responsavel.nome||'[Nome do responsável]';
+  const cri = k.crianca.nome||'[Nome da criança]';
+  const eu = quemSou()||'[Seu nome]';
+  const t = {
+    A:`Olá, ${resp}! Aqui é ${eu}, da Igreja Batista Nova Vida. Foi uma alegria receber você e o(a) ${cri} no Kids. Esperamos que ele(a) tenha se sentido bem. Estamos à disposição e será muito bom receber vocês novamente. IBNV — Uma Igreja Perto de Você!`,
+    B:`Agradecemos por nos contar sobre o(a) ${cri}. Vamos cuidar para que ele(a) se sinta seguro(a) e acolhido(a) por aqui. Se precisar de algo antes da próxima visita, pode contar conosco.`,
+    C:`Olá, ${resp}! Passando apenas para deixar nosso abraço. Não queremos incomodar; só queríamos dizer que foi muito bom receber o(a) ${cri} no Kids. Quando desejar, estaremos por aqui.`,
+    D:`Que alegria receber vocês novamente! O(A) ${cri} já tem um lugarzinho aqui no Kids. Queremos que vocês se sintam em casa.`
+  };
+  return t[tipo];
+}
+async function kidEnviarBastao(k){
+  const nome = (k.responsavel.nome||'').trim();
+  if(!nome){ alert('Preencha o nome do responsável antes de passar o bastão.'); return false; }
+  const cri = (k.crianca.nome||'').trim()||'criança';
+  const idade = idadeDe(k.crianca.nascimento);
+  const obs = 'Família com criança acolhida no Kids: '+cri+(idade?' ('+idade+')':'')+'. Citar no contato que a criança foi acolhida no Kids.';
+  let p = people.find(x=>normName(x.nome)===normName(nome));
+  if(p){
+    p.coordenacao = p.coordenacao || {observacao:'', encaminhamentoPastoral:false};
+    p.coordenacao.observacao = (p.coordenacao.observacao ? p.coordenacao.observacao+' | ' : '')+obs;
+  } else {
+    p = novaPessoa('kids');
+    p.nome = nome; p.telefone = k.responsavel.telefone||''; p.autorizaContato = !!k.autorizacoes.contato;
+    const d = k.visita.data ? new Date(k.visita.data+'T12:00:00') : new Date();
+    p.criadoEm = isNaN(d) ? new Date().toISOString() : d.toISOString();
+    p.coordenacao.observacao = obs;
+    p.consolidacao.proximoPasso = 'Contato citando a criança acolhida no Kids';
+    people.unshift(p);
+  }
+  await savePeople(people);
+  k.bastao = {enviado:true, pessoaId:p.id, em:new Date().toISOString()};
+  await saveKids(kids);
+  return true;
+}
+function renderKidForm(body, content){
+  const isNew = kidsFormId==='new';
+  const k = kidWork;
+  body.innerHTML = `
+    <div style="margin-bottom:14px;"><button class="btn btn-outline btn-small" id="kBack">← Voltar à lista</button></div>
+    <div class="card">
+      <h3 style="margin:0 0 4px;color:var(--wine-deep);">Ficha de Especificidades da Criança</h3>
+      <p class="hint" style="margin:0 0 14px;">Para preenchimento pelos pais ou responsáveis · Igreja Batista Nova Vida · Kids.<br>Queremos cuidar bem do seu filho. Conte para nós o que ele(a) precisa para se sentir seguro(a) e acolhido(a). Preencha só o que desejar; todos os campos de saúde e de comportamento são opcionais.</p>
+
+      <div class="section-block"><h4>1. A CRIANÇA</h4><div class="section-grid">
+        ${kfield(k,'Nome da criança *','crianca.nome','text',true)}
+        ${kfield(k,'Data de nascimento','crianca.nascimento','date')}
+        <div><label>Idade</label><input type="text" id="kIdade" value="${esc(idadeDe(k.crianca.nascimento)||'—')}" disabled></div>
+        ${kfield(k,'Como gosta de ser chamado(a)','crianca.apelido')}
+        ${kfield(k,'Data da visita','visita.data','date')}
+      </div></div>
+
+      <div class="section-block"><h4>2. RESPONSÁVEL</h4><div class="section-grid">
+        ${kfield(k,'Nome do responsável *','responsavel.nome','text',true)}
+        ${kfield(k,'WhatsApp/Telefone','responsavel.telefone','tel')}
+        ${kfield(k,'Parentesco','responsavel.parentesco')}
+        ${kfield(k,'Pessoa autorizada a buscar a criança (nome e parentesco)','responsavel.autorizadoBuscar','text',true)}
+      </div></div>
+
+      <div class="section-block"><h4>3. SAÚDE E CUIDADOS (opcional)</h4><div class="section-grid">
+        ${kfield(k,'Alergias (alimentar, medicamento, outras)','saude.alergias','text',true)}
+        ${kfield(k,'Restrição alimentar','saude.restricao')}
+        ${ksel(k,'Usa medicação durante o culto?','saude.medicacao',['','Sim','Não'])}
+        ${ksel(k,'Precisa de ajuda com o banheiro?','saude.banheiro',['','Não','Sim, com auxílio','Usa fralda'])}
+        ${kfield(k,'Outro cuidado de saúde','saude.outro')}
+      </div></div>
+
+      <div class="section-block"><h4>4. NECESSIDADES ESPECIAIS (opcional)</h4>
+        <p class="hint" style="margin:0 0 4px;">Se desejar, informe para que a equipe possa acolher melhor:</p>
+        ${kchk(k,'especiais.opcoes',KIDS_ESPECIAIS)}
+        <div class="section-grid">${kfield(k,'Outra:','especiais.outra','text',true)}</div>
+        <label>Como a criança se comunica?</label>
+        ${kchk(k,'especiais.comunicacao',KIDS_COMUNICA)}
+        <div class="section-grid">${kfield(k,'Outro:','especiais.comunicacaoOutro','text',true)}</div>
+      </div>
+
+      <div class="section-block"><h4>5. SENSIBILIDADES E REGULAÇÃO (opcional)</h4>
+        <label>O que costuma incomodar a criança?</label>
+        ${kchk(k,'regulacao.incomoda',KIDS_INCOMODA)}
+        <div class="section-grid">
+          ${kfield(k,'Outro:','regulacao.incomodaOutro','text',true)}
+          ${kfield(k,'O que costuma acalmar a criança? (objeto, música, frase, brinquedo, espaço)','regulacao.acalma','textarea')}
+          ${kfield(k,'Sinais de que ela está ficando desconfortável ou desregulada','regulacao.sinais','textarea')}
+          ${kfield(k,'O que a equipe deve FAZER ou EVITAR se isso acontecer?','regulacao.fazerEvitar','textarea')}
+          ${ksel(k,'A criança traz de casa algum objeto de conforto?','regulacao.objetoTem',['','Não','Sim'])}
+          ${kfield(k,'Se sim, qual?','regulacao.objeto')}
+          ${kfield(k,'Gostos e interesses da criança (ajuda a criar vínculo)','regulacao.gostos','textarea')}
+        </div>
+      </div>
+
+      <div class="section-block"><h4>6. AUTORIZAÇÕES</h4>
+        ${kbool(k,'Autorizo a IBNV a entrar em contato comigo pelo WhatsApp/telefone informado.','autorizacoes.contato')}
+        ${kbool(k,'Autorizo o uso de fotos e vídeos do meu filho(a) em materiais internos da igreja.','autorizacoes.fotos')}
+        ${kbool(k,'Autorizo a equipe do Kids a usar as informações desta ficha para cuidar do meu filho(a).','autorizacoes.usoInformacoes')}
+        ${kbool(k,'Ficha assinada pelo responsável (via em papel)','autorizacoes.assinada')}
+        <div class="section-grid">${kfield(k,'Data da assinatura','autorizacoes.assinadoEm','date')}</div>
+        <p class="hint">Privacidade: as informações desta ficha serão usadas exclusivamente para o acolhimento e o cuidado da criança e para a comunicação com a família, com acesso restrito às equipes responsáveis. O responsável pode atualizar ou retirar estas informações a qualquer momento.</p>
+      </div>
+
+      <div class="section-block"><h4>USO DA EQUIPE</h4><div class="section-grid">
+        ${kfield(k,'Ficha recebida por','equipe.recebidaPor')}
+        ${kfield(k,'Data','equipe.recebidaEm','date')}
+      </div>${kbool(k,'Informação passada à liderança do Kids','equipe.liderancaInformada')}</div>
+
+      <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-primary" id="kSave">${isNew?'Salvar ficha':'Salvar alterações'}</button>
+        <button class="btn btn-outline" id="kCancel">Cancelar</button>
+      </div>
+    </div>`;
+  body.querySelectorAll('[data-k]').forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      kidSet(k, inp.getAttribute('data-k'), inp.type==='checkbox' ? inp.checked : inp.value);
+      if(inp.getAttribute('data-k')==='crianca.nascimento') body.querySelector('#kIdade').value = idadeDe(k.crianca.nascimento)||'—';
+    });
+  });
+  body.querySelectorAll('[data-arr]').forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      const path = inp.getAttribute('data-arr');
+      let arr = (kidGet(k,path)||[]).filter(x=>x!==inp.value);
+      if(inp.checked) arr.push(inp.value);
+      kidSet(k, path, arr);
+    });
+  });
+  const sair = ()=>{ kidsFormId = null; kidWork = null; drawKids(content); };
+  body.querySelector('#kBack').onclick = sair;
+  body.querySelector('#kCancel').onclick = sair;
+  body.querySelector('#kSave').onclick = async ()=>{
+    if(!(k.crianca.nome||'').trim()){ alert('Informe o nome da criança.'); return; }
+    if(!(k.responsavel.nome||'').trim()){ alert('Informe o nome do responsável.'); return; }
+    if(isNew) kids.unshift(k);
+    else { const i = kids.findIndex(x=>x.id===k.id); if(i>=0) kids[i] = k; else kids.unshift(k); }
+    await saveKids(kids);
+    kidsExpanded = k.id; kidsFormId = null; kidWork = null;
+    drawKids(content);
+  };
+}
+function renderKidDetail(el, k, listEl, content){
+  const bastao = k.bastao.enviado
+    ? `<span class="pill">✓ Enviado à Recepção/Consolidação em ${fmtDayBR(localDayKey(k.bastao.em))}</span>`
+    : `<button class="btn btn-primary btn-small" id="kBastao">Passar o bastão à Recepção/Consolidação</button>`;
+  el.innerHTML = `
+    <div class="section-block"><h4>Resumo da ficha</h4>
+      <div class="hint" style="margin:0 0 6px;">Responsável: <b>${esc(k.responsavel.nome||'—')}</b> · ${esc(k.responsavel.telefone||'sem telefone')} · Parentesco: ${esc(k.responsavel.parentesco||'—')}<br>Autorizado a buscar: ${esc(k.responsavel.autorizadoBuscar||'—')}</div>
+      <div>${kidChips(k).map(c=>'<span class="chip">'+esc(c)+'</span>').join('') || '<span class="hint">Sem informações de atenção especial.</span>'}</div>
+      <div style="margin-top:10px;"><button class="btn btn-primary btn-small" id="kEdit">Abrir / editar a Ficha de Especificidades</button></div>
+    </div>
+    <div class="section-block"><h4>Acompanhamento da família</h4><div class="section-grid">
+      ${ksel(k,'Destino','acompanhamento.destino',KIDS_DESTINOS)}
+      ${kfield(k,'Data do contato com a família','acompanhamento.contatoData','date')}
+      ${kfield(k,'Contato feito por','acompanhamento.contatoPor')}
+      ${kfield(k,'Observação (objetiva, sem intimidades)','acompanhamento.observacao','textarea')}
+    </div>
+      <div style="margin-top:10px;">${bastao}</div>
+      <div style="margin-top:12px;"><label>Mensagens prontas (copia o texto já com os nomes)</label>
+        <button class="btn btn-outline btn-small" data-msg="A">1º contato</button>
+        <button class="btn btn-outline btn-small" data-msg="B">Necessidade informada</button>
+        <button class="btn btn-outline btn-small" data-msg="C">2ª tentativa</button>
+        <button class="btn btn-outline btn-small" data-msg="D">Família retornou</button>
+      </div>
+    </div>
+    ${currentUser.role==='coordenacao' ? '<div style="margin-top:10px;"><button class="btn btn-danger btn-small" id="kDel">Excluir registro</button></div>' : ''}`;
+  el.querySelectorAll('[data-k]').forEach(inp=>{
+    inp.addEventListener('change', async ()=>{
+      kidSet(k, inp.getAttribute('data-k'), inp.type==='checkbox' ? inp.checked : inp.value);
+      await saveKids(kids); renderKidsList(listEl, content);
+    });
+  });
+  el.querySelector('#kEdit').onclick = ()=>{ kidWork = JSON.parse(JSON.stringify(k)); kidsFormId = k.id; drawKids(content); };
+  const b = el.querySelector('#kBastao');
+  if(b) b.onclick = async ()=>{ if(await kidEnviarBastao(k)) renderKidsList(listEl, content); };
+  el.querySelectorAll('[data-msg]').forEach(btn=>{ btn.onclick = ()=>copyText(kidMsg(btn.getAttribute('data-msg'), k)); });
+  const d = el.querySelector('#kDel');
+  if(d) d.onclick = ()=>{
+    const removerFicha = async ()=>{ kids = kids.filter(x=>x.id!==k.id); kidsExpanded = null; await saveKids(kids); drawKids(content); };
+    const acoes = [{label:'Excluir só a ficha do Kids', fn:removerFicha}];
+    const vinc = (k.bastao && k.bastao.enviado) ? people.find(x=>x.id===k.bastao.pessoaId && x.criadoPor==='kids') : null;
+    if(vinc) acoes.push({label:'Excluir a ficha e o cadastro do responsável', fn: async ()=>{ people = people.filter(x=>x.id!==vinc.id); await savePeople(people); await removerFicha(); }});
+    pedirConfirmacao(d, 'Excluir o registro desta criança? Não dá para desfazer.'+(vinc?' O responsável também foi cadastrado em Pessoas pela passagem de bastão.':''), acoes);
+  };
+}
+function renderKidsChecklist(body){
+  const rows = kidsChecks.slice().sort((a,b)=>(b.data||'').localeCompare(a.data||'')).map(c=>{
+    const ok = (c.itens||[]).filter(Boolean).length;
+    return `<tr><td>${fmtDayBR(c.data)}</td><td>${esc(c.responsavel)}</td><td>${ok}/${KIDS_CHECKLIST.length}</td><td>${esc(c.pendencias||'—')}</td>${currentUser.role==='coordenacao'?`<td><button class="btn btn-danger btn-small" data-del="${c.id}">Excluir</button></td>`:''}</tr>`;
+  }).join('');
+  body.innerHTML = `
+    <div class="card">
+      <h3 style="margin-top:0;">Checklist pós-culto — Kids + Recepção + Consolidação</h3>
+      <div class="section-grid">
+        <div><label>Data</label><input type="date" id="ckData" value="${hojeKey()}"></div>
+        <div><label>Responsável pela conferência</label><input type="text" id="ckResp" value="${esc(quemSou())}"></div>
+      </div>
+      <div style="margin-top:10px;">${KIDS_CHECKLIST.map((t,i)=>`<label class="checkline" style="margin-top:8px;"><input type="checkbox" class="ckItem" data-i="${i}"> ${esc(t)}</label>`).join('')}</div>
+      <label>Pendências</label><textarea id="ckPend"></textarea>
+      <p class="hint">Antes de encerrar: não pergunte apenas “as crianças foram entregues?”. Pergunte “há alguma família esperando cuidado?”</p>
+      <button class="btn btn-primary" id="ckSave">Salvar checklist</button>
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;">Histórico</h3>
+      ${rows ? `<table class="people-table"><thead><tr><th>Data</th><th>Responsável</th><th>Itens</th><th>Pendências</th>${currentUser.role==='coordenacao'?'<th></th>':''}</tr></thead><tbody>${rows}</tbody></table>` : '<div class="empty-note">Nenhum checklist salvo ainda.</div>'}
+    </div>`;
+  body.querySelector('#ckSave').onclick = async ()=>{
+    const data = body.querySelector('#ckData').value;
+    if(!data){ alert('Informe a data.'); return; }
+    const itens = [...body.querySelectorAll('.ckItem')].map(x=>x.checked);
+    kidsChecks.push({id:'c'+Date.now(), data, responsavel:body.querySelector('#ckResp').value.trim(), itens, pendencias:body.querySelector('#ckPend').value.trim(), criadoEm:new Date().toISOString()});
+    await saveKidsChecks(kidsChecks);
+    renderKidsChecklist(body);
+  };
+  body.querySelectorAll('[data-del]').forEach(b=>{
+    b.onclick = ()=>{
+      pedirConfirmacao(b, 'Excluir este checklist?', async ()=>{
+        kidsChecks = kidsChecks.filter(c=>c.id!==b.getAttribute('data-del'));
+        await saveKidsChecks(kidsChecks); renderKidsChecklist(body);
+      });
+    };
+  });
+}
+function renderKidsGuia(body){
+  const rot = [
+    ['A. Primeiro contato com a família visitante','Olá, [Nome do responsável]! Aqui é [Nome], da Igreja Batista Nova Vida. Foi uma alegria receber você e o(a) [Nome da criança] no Kids. Esperamos que ele(a) tenha se sentido bem. Estamos à disposição e será muito bom receber vocês novamente. IBNV — Uma Igreja Perto de Você!'],
+    ['B. Quando a família informar uma necessidade da criança','Agradecemos por nos contar sobre o(a) [Nome da criança]. Vamos cuidar para que ele(a) se sinta seguro(a) e acolhido(a) por aqui. Se precisar de algo antes da próxima visita, pode contar conosco.'],
+    ['C. Segunda tentativa, se não respondeu','Olá, [Nome]! Passando apenas para deixar nosso abraço. Não queremos incomodar; só queríamos dizer que foi muito bom receber o(a) [Nome da criança] no Kids. Quando desejar, estaremos por aqui.'],
+    ['D. Quando a família retorna','Que alegria receber vocês novamente! O(A) [Nome da criança] já tem um lugarzinho aqui no Kids. Queremos que vocês se sintam em casa.']
+  ];
+  const faca = ['Chegue antes e esteja disponível.','Abaixe-se e chame a criança pelo nome.','Sorria e cumprimente também o responsável.','Perceba a criança que está sozinha ou retraída.','Explique a sala, os horários e como será a entrega.','Identifique famílias visitantes com discrição.','Informe a Recepção/Consolidação com rapidez.'];
+  const evite = ['Cercar ou constranger a criança ou a família.','Comparar crianças ou comentar comportamento.','Fazer interrogatório com o responsável.','Conversas paralelas enquanto a família chega.','Prometer algo que outra área terá de cumprir.','Comentar informações pessoais ou de saúde.','Cobrar retorno ou frequência da família.'];
+  const seg = ['A criança só sai com o responsável cadastrado ou com pessoa autorizada por ele, seguindo o procedimento de entrega já adotado pelo Kids.','Dados da criança e da família são tratados com sigilo e usados apenas para acolhimento e acompanhamento, com acesso restrito às equipes responsáveis.','Sem fotos ou publicações de crianças sem autorização expressa do responsável.','Necessidades de saúde e de regulação são conversadas com o responsável, com reserva, por meio da Ficha de Especificidades e seguem o Protocolo de Regulação KIDS.','Situações de risco, suspeita de maus-tratos ou qualquer caso delicado sobem imediatamente à liderança do Kids e à liderança pastoral. Não se comenta com terceiros.'];
+  const li = a => '<ul style="margin:6px 0 0;padding-left:18px;font-size:.86rem;line-height:1.6;">'+a.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+  body.innerHTML = `
+    <div class="card">
+      <h3 style="margin-top:0;">Roteiros de contato</h3>
+      ${rot.map((r,i)=>`<div style="margin-bottom:14px;"><b style="font-size:.86rem;">${esc(r[0])}</b><p style="margin:4px 0;font-size:.86rem;">${esc(r[1])}</p><button class="btn btn-outline btn-small" data-rot="${i}">Copiar modelo</button></div>`).join('')}
+      <p class="hint">Não copie e cole sem sensibilidade. Use o nome da criança e do responsável, respeite o tempo da família e nunca pressione por retorno. Dentro da ficha de cada criança há botões que já preenchem os nomes.</p>
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;">Guia de bolso do Kids</h3>
+      <div class="section-grid"><div><b style="color:var(--verde);">FAÇA</b>${li(faca)}</div><div><b style="color:var(--vermelho);">EVITE</b>${li(evite)}</div></div>
+      <p style="font-style:italic;font-size:.84rem;color:var(--ink-soft);margin-top:14px;">“Queremos que cada criança perceba: alguém me viu, me recebeu e cuidou de mim. E que cada pai e mãe perceba: posso confiar.”</p>
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;">Segurança e sigilo</h3>${li(seg)}
+    </div>`;
+  body.querySelectorAll('[data-rot]').forEach(b=>{ b.onclick = ()=>copyText(rot[Number(b.getAttribute('data-rot'))][1]); });
+}
+
+/* ---------- DIACONATO ---------- */
+let diacos = [], diacEscalas = [], diacCeias = [], diacLoaded = false;
+let diacView = 'diaconos', diacSearch = '', diacFiltro = 'todos', diacExpanded = null, diacEscFiltro = 'proximas';
+const DIAC_AREAS = ['Portaria','Recepção ao culto','Ofertório','Santa Ceia','Estacionamento e segurança','Visitação','Apoio ao púlpito'];
+const DIAC_SITUACOES = ['Ativo','Em treinamento','Afastado','Desligado'];
+const DIAC_CULTOS = ['Culto de domingo (manhã)','Culto de domingo (noite)','Escola Bíblica Dominical','Culto de oração','Culto de ensino','Evento especial'];
+const DIAC_ETAPAS_PADRAO = ['Entrevista e acompanhamento do pastor','Estudo sobre o diaconato','Acompanhamento em escalas (como observador)','Treinamento de Santa Ceia','Avaliação final com a liderança'];
+const DIAC_FUNCOES_CEIA = ['Preparo','Distribuição do pão','Distribuição do cálice','Recolhimento'];
+const DIAC_CEIA_CHECK = ['Pão/elemento preparado','Suco de uva preparado','Cálices e bandejas higienizados','Mesa e toalhas arrumadas','Diáconos escalados avisados','Material recolhido e higienizado ao final'];
+const DIAC_CEIA_STATUS = ['Agendada','Realizada','Cancelada'];
+
+function canSeeDiaconato(){
+  return !!currentUser && (currentUser.role==='coordenacao' || (currentUser.role==='membro' && currentUser.team==='diaconato'));
+}
+function canManageDiaconato(){
+  return !!currentUser && (currentUser.role==='coordenacao' ||
+    (currentUser.role==='membro' && currentUser.team==='diaconato' && (currentUser.nivel==='Líder' || currentUser.nivel==='Adjunto')));
+}
+async function loadDiacList(chave){
+  try{ const r = await safeGet(chave); return r && r.value ? JSON.parse(r.value) : []; }
+  catch(e){ return []; }
+}
+async function saveDiacList(chave, lista){
+  try{ await window.storage.set(chave, JSON.stringify(lista), true); }
+  catch(e){ console.error('Erro ao salvar '+chave, e); }
+}
+const saveDiacos = ()=>saveDiacList('ibnv-diac-diaconos', diacos);
+const saveDiacEscalas = ()=>saveDiacList('ibnv-diac-escalas', diacEscalas);
+const saveDiacCeias = ()=>saveDiacList('ibnv-diac-ceias', diacCeias);
+async function ensureDiac(force){
+  if(!diacLoaded || force){
+    diacos = await loadDiacList('ibnv-diac-diaconos');
+    diacEscalas = await loadDiacList('ibnv-diac-escalas');
+    diacCeias = await loadDiacList('ibnv-diac-ceias');
+    diacLoaded = true;
+  }
+}
+function diacId(p){ return p+Date.now()+Math.floor(Math.random()*1000); }
+function novoDiacono(situacao){
+  return {
+    id:diacId('d'), criadoEm:new Date().toISOString(), nome:'', telefone:'', nascimento:'', situacao, consagracao:'',
+    areas:[], observacao:'',
+    treinamento:{inicio: situacao==='Em treinamento' ? hojeKey() : '', previsao:'', responsavel:'',
+      etapas: DIAC_ETAPAS_PADRAO.map(n=>({nome:n, feito:false})), observacao:''}
+  };
+}
+function novaEscala(){
+  return {id:diacId('e'), criadoEm:new Date().toISOString(), data:hojeKey(), culto:DIAC_CULTOS[0], observacao:'', itens:[]};
+}
+function novaCeia(){
+  return {id:diacId('c'), criadoEm:new Date().toISOString(), data:hojeKey(), culto:DIAC_CULTOS[1], ministrante:'', estimativa:'',
+    status:'Agendada', observacao:'', preparoFeito:[],
+    itens: DIAC_FUNCOES_CEIA.map(f=>({funcao:f, diaconoId:'', diaconoNome:'', confirmado:false}))};
+}
+function diacAtivos(){
+  return diacos.filter(d=>d.situacao==='Ativo').sort((a,b)=>String(a.nome).localeCompare(String(b.nome),'pt-BR'));
+}
+function diacProgresso(d){
+  const e = (d.treinamento && d.treinamento.etapas) || [];
+  return e.length ? Math.round(e.filter(x=>x.feito).length/e.length*100) : 0;
+}
+function diaSemana(key){
+  const d = new Date(key+'T12:00:00');
+  return isNaN(d) ? '' : d.toLocaleDateString('pt-BR',{weekday:'long'});
+}
+function diacConflitos(rec){
+  const vistos = {};
+  (rec.itens||[]).forEach(it=>{ if(it.diaconoId) vistos[it.diaconoId] = (vistos[it.diaconoId]||0)+1; });
+  diacEscalas.concat(diacCeias).forEach(o=>{
+    if(o.id!==rec.id && o.data===rec.data && o.culto===rec.culto)
+      (o.itens||[]).forEach(it=>{ if(it.diaconoId && vistos[it.diaconoId]!==undefined) vistos[it.diaconoId]++; });
+  });
+  return Object.keys(vistos).filter(id=>vistos[id]>1).map(id=>{ const d = diacos.find(x=>x.id===id); return d ? d.nome : 'Diácono'; });
+}
+function diacTexto(e, tipo){
+  let t = '*'+(tipo==='ceia'?'Santa Ceia':'Escala de serviço')+' — '+fmtDayBR(e.data)+' ('+diaSemana(e.data)+')*\n'+e.culto;
+  if(tipo==='ceia' && e.ministrante) t += '\nMinistrante: '+e.ministrante;
+  (e.itens||[]).forEach(it=>{ t += '\n• '+it.funcao+': '+(it.diaconoNome||'(a definir)')+(it.confirmado?' ✅':''); });
+  if(e.observacao) t += '\nObs.: '+e.observacao;
+  return t;
+}
+async function renderDiaconato(content){
+  if(!canSeeDiaconato()){ content.innerHTML = ''; return; }
+  content.innerHTML = '<div class="empty-note">Carregando...</div>';
+  await ensureDiac();
+  drawDiac(content);
+}
+function drawDiac(content){
+  const subs = [['diaconos','Diáconos'],['treino','Em treinamento'],['escalas','Escalas de serviço'],['ceia','Santa Ceia']];
+  const perfil = canManageDiaconato()
+    ? 'Liderança do Diaconato: você cadastra, edita e exclui diáconos, escalas e Santa Ceia.'
+    : 'Diaconato: você consulta e edita escalas, Santa Ceia e treinamento. Cadastrar e excluir é com a liderança.';
+  content.innerHTML = `
+    <div class="banner">${perfil}</div>
+    <nav class="tabs">${subs.map(s=>`<button data-dsub="${s[0]}" class="${diacView===s[0]?'active':''}">${s[1]}</button>`).join('')}</nav>
+    <div id="diacBody"></div>`;
+  content.querySelectorAll('[data-dsub]').forEach(b=>{
+    b.onclick = ()=>{ diacView = b.getAttribute('data-dsub'); diacExpanded = null; drawDiac(content); };
+  });
+  const body = content.querySelector('#diacBody');
+  if(diacView==='diaconos' || diacView==='treino') renderDiacPessoas(body, content, diacView==='treino');
+  else renderDiacEventos(body, content, diacView);
+}
+/* ----- Diáconos e treinamento ----- */
+function renderDiacPessoas(body, content, treino){
+  const ativos = diacos.filter(d=>d.situacao==='Ativo').length;
+  const emTrein = diacos.filter(d=>d.situacao==='Em treinamento').length;
+  const afast = diacos.filter(d=>d.situacao==='Afastado').length;
+  body.innerHTML = `
+    <div class="stat-row">
+      <div class="stat"><div class="num">${ativos}</div><div class="lbl">Diáconos ativos</div></div>
+      <div class="stat"><div class="num">${emTrein}</div><div class="lbl">Em treinamento</div></div>
+      <div class="stat"><div class="num">${afast}</div><div class="lbl">Afastados</div></div>
+    </div>
+    <div class="toolbar">
+      ${canManageDiaconato() ? `<button class="btn btn-primary" id="dAdd">${treino?'+ Cadastrar em treinamento':'+ Cadastrar diácono'}</button>` : ''}
+      <input type="text" id="dSearch" placeholder="Buscar por nome..." value="${esc(diacSearch)}">
+      ${treino ? '' : `<select id="dFiltro"><option value="todos">Todos</option><option value="Ativo">Ativos</option><option value="Afastado">Afastados</option><option value="Desligado">Desligados</option></select>`}
+      <button class="btn btn-outline btn-small" id="dRefresh">Atualizar</button>
+    </div>
+    <div id="diacList"></div>`;
+  const lista = body.querySelector('#diacList');
+  const sel = body.querySelector('#dFiltro'); if(sel) sel.value = diacFiltro;
+  const add = body.querySelector('#dAdd');
+  if(add) add.onclick = async ()=>{
+    const d = novoDiacono(treino ? 'Em treinamento' : 'Ativo');
+    diacos.unshift(d); await saveDiacos(); diacExpanded = d.id; drawDiac(content);
+  };
+  body.querySelector('#dSearch').oninput = e=>{ diacSearch = e.target.value; renderDiacPessoasList(lista, content, treino); };
+  if(sel) sel.onchange = e=>{ diacFiltro = e.target.value; renderDiacPessoasList(lista, content, treino); };
+  body.querySelector('#dRefresh').onclick = async ()=>{ await ensureDiac(true); drawDiac(content); };
+  renderDiacPessoasList(lista, content, treino);
+}
+function renderDiacPessoasList(listEl, content, treino){
+  const q = normName(diacSearch);
+  const itens = diacos.filter(d=>{
+    if(treino ? d.situacao!=='Em treinamento' : d.situacao==='Em treinamento') return false;
+    if(!treino && diacFiltro!=='todos' && d.situacao!==diacFiltro) return false;
+    return !q || normName(d.nome).includes(q);
+  }).sort((a,b)=>String(a.nome).localeCompare(String(b.nome),'pt-BR'));
+  if(!itens.length){ listEl.innerHTML = `<div class="empty-note">${treino?'Ninguém em treinamento no momento.':'Nenhum diácono encontrado.'}</div>`; return; }
+  listEl.innerHTML = '';
+  itens.forEach(d=>{
+    const row = document.createElement('div'); row.className = 'person-row';
+    const prog = diacProgresso(d);
+    row.innerHTML = `
+      <div class="person-head">
+        <div>
+          <div class="name">${esc(d.nome||'(sem nome)')}</div>
+          <div class="meta">${esc(d.situacao)}${d.telefone?' · '+esc(d.telefone):''}${treino && d.treinamento.responsavel?' · Tutor: '+esc(d.treinamento.responsavel):''}</div>
+          ${treino ? `<div class="phase-track" style="height:10px;margin-top:6px;max-width:260px;"><div class="phase-fill" style="width:${prog}%;background:var(--wine);"></div></div><div class="hint" style="margin:2px 0 0;">${prog}% das etapas concluídas</div>` : ''}
+          <div>${(d.areas||[]).map(a=>'<span class="chip">'+esc(a)+'</span>').join('')}</div>
+        </div>
+        <span class="pill">${diacExpanded===d.id?'fechar ▲':'abrir ▼'}</span>
+      </div>
+      <div class="person-body ${diacExpanded===d.id?'open':''}"></div>`;
+    listEl.appendChild(row);
+    row.querySelector('.person-head').onclick = ()=>{ diacExpanded = diacExpanded===d.id ? null : d.id; renderDiacPessoasList(listEl, content, treino); };
+    if(diacExpanded===d.id) renderDiaconoEditor(row.querySelector('.person-body'), d, listEl, content, treino);
+  });
+}
+function renderDiaconoEditor(el, d, listEl, content, treino){
+  const manage = canManageDiaconato();
+  const emTrein = d.situacao==='Em treinamento';
+  const etapas = (d.treinamento && d.treinamento.etapas) || [];
+  el.innerHTML = `
+    <div class="section-block"><h4>Ficha do diácono</h4>
+      <div class="section-grid">
+        ${kfield(d,'Nome *','nome','text',true)}
+        ${kfield(d,'WhatsApp/Telefone','telefone','tel')}
+        ${kfield(d,'Data de nascimento','nascimento','date')}
+        ${ksel(d,'Situação','situacao',DIAC_SITUACOES)}
+        ${kfield(d,'Data de consagração','consagracao','date')}
+      </div>
+      <label>Áreas de atuação</label>${kchk(d,'areas',DIAC_AREAS)}
+      <div class="section-grid">${kfield(d,'Observação','observacao','textarea')}</div>
+    </div>
+    ${emTrein ? `
+    <div class="section-block"><h4>Treinamento</h4>
+      <div class="section-grid">
+        ${kfield(d,'Início do treinamento','treinamento.inicio','date')}
+        ${kfield(d,'Previsão de conclusão','treinamento.previsao','date')}
+        ${kfield(d,'Responsável pelo treinamento (tutor)','treinamento.responsavel','text',true)}
+      </div>
+      <label>Etapas (${diacProgresso(d)}% concluídas)</label>
+      ${etapas.map((e,i)=>`<div style="display:flex;align-items:center;gap:8px;"><label class="checkline" style="margin:5px 0;flex:1;"><input type="checkbox" data-et="${i}" ${e.feito?'checked':''}> ${esc(e.nome)}</label>${manage?`<button class="btn btn-outline btn-small" data-etdel="${i}" title="Remover etapa">×</button>`:''}</div>`).join('')}
+      ${manage ? `<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;"><input type="text" id="etNova" placeholder="Nova etapa" style="flex:1;min-width:160px;"><button class="btn btn-outline btn-small" id="etAdd">Adicionar etapa</button></div>` : ''}
+      <div class="section-grid">${kfield(d,'Observações do treinamento','treinamento.observacao','textarea')}</div>
+      ${manage ? '<div style="margin-top:12px;"><button class="btn btn-primary btn-small" id="dConcluir">Concluir treinamento e tornar Ativo</button></div>' : ''}
+    </div>` : ''}
+    ${manage ? '<div style="margin-top:10px;"><button class="btn btn-danger btn-small" id="dDel">Excluir cadastro</button></div>' : ''}`;
+  const rerender = ()=>renderDiacPessoasList(listEl, content, treino);
+  el.querySelectorAll('[data-k]').forEach(inp=>{
+    inp.addEventListener('change', async ()=>{
+      kidSet(d, inp.getAttribute('data-k'), inp.type==='checkbox' ? inp.checked : inp.value);
+      await saveDiacos();
+      if(inp.getAttribute('data-k')==='situacao') drawDiac(content); else rerender();
+    });
+  });
+  el.querySelectorAll('[data-arr]').forEach(inp=>{
+    inp.addEventListener('change', async ()=>{
+      const path = inp.getAttribute('data-arr');
+      let arr = (kidGet(d,path)||[]).filter(x=>x!==inp.value);
+      if(inp.checked) arr.push(inp.value);
+      kidSet(d, path, arr); await saveDiacos(); rerender();
+    });
+  });
+  el.querySelectorAll('[data-et]').forEach(cb=>{
+    cb.addEventListener('change', async ()=>{ d.treinamento.etapas[Number(cb.getAttribute('data-et'))].feito = cb.checked; await saveDiacos(); rerender(); });
+  });
+  el.querySelectorAll('[data-etdel]').forEach(b=>{
+    b.onclick = async ()=>{ d.treinamento.etapas.splice(Number(b.getAttribute('data-etdel')),1); await saveDiacos(); rerender(); };
+  });
+  const etAdd = el.querySelector('#etAdd');
+  if(etAdd) etAdd.onclick = async ()=>{
+    const v = el.querySelector('#etNova').value.trim(); if(!v) return;
+    d.treinamento.etapas.push({nome:v, feito:false}); await saveDiacos(); rerender();
+  };
+  const conc = el.querySelector('#dConcluir');
+  if(conc) conc.onclick = async ()=>{
+    d.situacao = 'Ativo'; if(!d.consagracao) d.consagracao = hojeKey();
+    await saveDiacos(); diacExpanded = null; toast((d.nome||'Diácono')+' agora está como Ativo.'); drawDiac(content);
+  };
+  const del = el.querySelector('#dDel');
+  if(del) del.onclick = ()=>{
+    pedirConfirmacao(del, 'Excluir o cadastro deste diácono? Não dá para desfazer.', async ()=>{
+      diacos = diacos.filter(x=>x.id!==d.id); diacExpanded = null; await saveDiacos(); drawDiac(content);
+    });
+  };
+}
+/* ----- Escalas de serviço e Santa Ceia ----- */
+function renderDiacEventos(body, content, tipo){
+  const lista = tipo==='ceia' ? diacCeias : diacEscalas;
+  const hoje = hojeKey();
+  const proximas = lista.filter(e=>e.data>=hoje).length;
+  body.innerHTML = `
+    <div class="stat-row">
+      <div class="stat"><div class="num">${lista.length}</div><div class="lbl">${tipo==='ceia'?'Santas Ceias registradas':'Escalas registradas'}</div></div>
+      <div class="stat"><div class="num">${proximas}</div><div class="lbl">Próximas</div></div>
+    </div>
+    <div class="toolbar">
+      ${canManageDiaconato() ? `<button class="btn btn-primary" id="eAdd">${tipo==='ceia'?'+ Nova Santa Ceia':'+ Nova escala'}</button>` : ''}
+      <select id="eFiltro"><option value="proximas">Próximas</option><option value="passadas">Passadas</option><option value="todas">Todas</option></select>
+      <button class="btn btn-outline btn-small" id="eRefresh">Atualizar</button>
+    </div>
+    <div id="diacList"></div>`;
+  const listEl = body.querySelector('#diacList');
+  body.querySelector('#eFiltro').value = diacEscFiltro;
+  const add = body.querySelector('#eAdd');
+  if(add) add.onclick = async ()=>{
+    const e = tipo==='ceia' ? novaCeia() : novaEscala();
+    lista.unshift(e); await (tipo==='ceia' ? saveDiacCeias() : saveDiacEscalas()); diacEscFiltro = 'todas'; diacExpanded = e.id; drawDiac(content);
+  };
+  body.querySelector('#eFiltro').onchange = ev=>{ diacEscFiltro = ev.target.value; renderDiacEventosList(listEl, content, tipo); };
+  body.querySelector('#eRefresh').onclick = async ()=>{ await ensureDiac(true); drawDiac(content); };
+  renderDiacEventosList(listEl, content, tipo);
+}
+function renderDiacEventosList(listEl, content, tipo){
+  const lista = tipo==='ceia' ? diacCeias : diacEscalas;
+  const hoje = hojeKey();
+  let itens = lista.filter(e=> diacEscFiltro==='todas' ? true : diacEscFiltro==='proximas' ? e.data>=hoje : e.data<hoje);
+  itens = itens.sort((a,b)=> diacEscFiltro==='proximas' ? String(a.data).localeCompare(String(b.data)) : String(b.data).localeCompare(String(a.data)));
+  if(!itens.length){ listEl.innerHTML = '<div class="empty-note">Nada por aqui neste filtro.</div>'; return; }
+  listEl.innerHTML = '';
+  itens.forEach(e=>{
+    const conf = (e.itens||[]).filter(i=>i.confirmado).length, tot = (e.itens||[]).length;
+    const confl = diacConflitos(e);
+    const row = document.createElement('div'); row.className = 'person-row';
+    row.innerHTML = `
+      <div class="person-head">
+        <div>
+          <div class="name">${e.data?fmtDayBR(e.data):'—'} <span class="hint">${esc(diaSemana(e.data))}</span> — ${esc(e.culto||'')}</div>
+          <div class="meta">${tipo==='ceia' ? esc(e.status)+(e.ministrante?' · Ministrante: '+esc(e.ministrante):'')+' · ' : ''}${tot} função(ões) · ${conf} confirmada(s)</div>
+          ${confl.length ? '<div class="flag">Atenção: '+esc(confl.join(', '))+' escalado(a) mais de uma vez neste culto</div>' : ''}
+        </div>
+        <span class="pill">${diacExpanded===e.id?'fechar ▲':'abrir ▼'}</span>
+      </div>
+      <div class="person-body ${diacExpanded===e.id?'open':''}"></div>`;
+    listEl.appendChild(row);
+    row.querySelector('.person-head').onclick = ()=>{ diacExpanded = diacExpanded===e.id ? null : e.id; renderDiacEventosList(listEl, content, tipo); };
+    if(diacExpanded===e.id) renderEventoEditor(row.querySelector('.person-body'), e, listEl, content, tipo);
+  });
+}
+function renderEventoEditor(el, e, listEl, content, tipo){
+  const manage = canManageDiaconato();
+  const ceia = tipo==='ceia';
+  const funcoes = ceia ? DIAC_FUNCOES_CEIA.concat(DIAC_AREAS.filter(a=>a!=='Santa Ceia')) : DIAC_AREAS.concat(DIAC_FUNCOES_CEIA);
+  const ativos = diacAtivos();
+  const opcoesDiac = sel => '<option value="">— diácono —</option>'+ativos.map(d=>`<option value="${esc(d.id)}" ${sel===d.id?'selected':''}>${esc(d.nome)}</option>`).join('');
+  const linhas = (e.itens||[]).map((it,i)=>`
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px;">
+      <select data-ik="${i}|funcao" style="flex:1;min-width:150px;">${[...new Set([it.funcao].concat(funcoes))].map(f=>`<option value="${esc(f)}" ${it.funcao===f?'selected':''}>${esc(f)}</option>`).join('')}</select>
+      <select data-ik="${i}|diaconoId" style="flex:1;min-width:150px;">${opcoesDiac(it.diaconoId)}</select>
+      <label class="checkline" style="margin:0;"><input type="checkbox" data-ik="${i}|confirmado" ${it.confirmado?'checked':''}> Confirmado</label>
+      ${manage?`<button class="btn btn-outline btn-small" data-ir="${i}" title="Remover linha">×</button>`:''}
+    </div>`).join('');
+  el.innerHTML = `
+    <div class="section-block"><h4>${ceia?'Santa Ceia':'Escala de serviço'}</h4><div class="section-grid">
+      ${kfield(e,'Data','data','date')}
+      ${ksel(e,'Culto','culto',DIAC_CULTOS)}
+      ${ceia ? kfield(e,'Ministrante (pastor)','ministrante') : ''}
+      ${ceia ? kfield(e,'Estimativa de participantes','estimativa','number') : ''}
+      ${ceia ? ksel(e,'Situação','status',DIAC_CEIA_STATUS) : ''}
+      ${kfield(e,'Observação','observacao','textarea')}
+    </div></div>
+    <div class="section-block"><h4>Quem serve</h4>
+      ${linhas || '<p class="hint">Nenhuma função na escala ainda.</p>'}
+      <button class="btn btn-outline btn-small" id="itAdd">+ Adicionar função</button>
+      ${ativos.length ? '' : '<p class="hint">Cadastre diáconos ativos na aba Diáconos para poder escalá-los.</p>'}
+    </div>
+    ${ceia ? `<div class="section-block"><h4>Preparo da Santa Ceia</h4>${kchk(e,'preparoFeito',DIAC_CEIA_CHECK)}</div>` : ''}
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
+      <button class="btn btn-outline btn-small" id="eCopy">Copiar para WhatsApp</button>
+      ${manage ? '<button class="btn btn-danger btn-small" id="eDel">Excluir</button>' : ''}
+    </div>`;
+  const salvar = ()=> ceia ? saveDiacCeias() : saveDiacEscalas();
+  const rerender = ()=>renderDiacEventosList(listEl, content, tipo);
+  el.querySelectorAll('[data-k]').forEach(inp=>{
+    inp.addEventListener('change', async ()=>{ kidSet(e, inp.getAttribute('data-k'), inp.value); await salvar(); rerender(); });
+  });
+  el.querySelectorAll('[data-arr]').forEach(inp=>{
+    inp.addEventListener('change', async ()=>{
+      const path = inp.getAttribute('data-arr');
+      let arr = (kidGet(e,path)||[]).filter(x=>x!==inp.value);
+      if(inp.checked) arr.push(inp.value);
+      kidSet(e, path, arr); await salvar(); rerender();
+    });
+  });
+  el.querySelectorAll('[data-ik]').forEach(inp=>{
+    inp.addEventListener('change', async ()=>{
+      const p = inp.getAttribute('data-ik').split('|'); const it = e.itens[Number(p[0])];
+      if(p[1]==='confirmado') it.confirmado = inp.checked;
+      else if(p[1]==='diaconoId'){ it.diaconoId = inp.value; const d = diacos.find(x=>x.id===inp.value); it.diaconoNome = d ? d.nome : ''; }
+      else it[p[1]] = inp.value;
+      await salvar(); rerender();
+    });
+  });
+  el.querySelectorAll('[data-ir]').forEach(b=>{
+    b.onclick = async ()=>{ e.itens.splice(Number(b.getAttribute('data-ir')),1); await salvar(); rerender(); };
+  });
+  el.querySelector('#itAdd').onclick = async ()=>{
+    e.itens.push({funcao: funcoes[0], diaconoId:'', diaconoNome:'', confirmado:false}); await salvar(); rerender();
+  };
+  el.querySelector('#eCopy').onclick = ()=>copyText(diacTexto(e, tipo));
+  const del = el.querySelector('#eDel');
+  if(del) del.onclick = ()=>{
+    pedirConfirmacao(del, 'Excluir '+(ceia?'esta Santa Ceia':'esta escala')+'? Não dá para desfazer.', async ()=>{
+      if(ceia) diacCeias = diacCeias.filter(x=>x.id!==e.id); else diacEscalas = diacEscalas.filter(x=>x.id!==e.id);
+      diacExpanded = null; await salvar(); drawDiac(content);
+    });
+  };
+}
+
+/* ---------- MINHA EQUIPE (liderança) ---------- */
+function renderMinhaEquipe(content){
+  const team = currentUser.team;
+  const members = roster.filter(r=>r.team===team);
+  const por = fn => {
+    const l = members.filter(r=>(r.role||'Integrante')===fn).map(r=>esc(r.name));
+    return l.length ? l.join(', ') : '<span class="hint">Ninguém cadastrado</span>';
+  };
+  const pend = visiblePeople().filter(p=>pessoaPendencias(p).length);
+  const rows = pend.map(p=>'<tr><td><span class="dot '+pessoaAlerta(p)+'"></span><b>'+esc(p.nome)+'</b></td><td>'+esc(p.status)+'</td><td>'+esc(pessoaPendencias(p).join('; '))+'</td></tr>').join('');
+  content.innerHTML = `
+    <div class="card">
+      <h3 style="margin-top:0;">Minha equipe — ${teamLabel(team)}</h3>
+      <div class="org-role"><div class="role-label">Líder</div><div class="names">${por('Líder')}</div></div>
+      <div class="org-role"><div class="role-label">Adjunto</div><div class="names">${por('Adjunto')}</div></div>
+      <div class="org-role"><div class="role-label">Integrantes</div><div class="names">${por('Integrante')}</div></div>
+      <p class="hint">${currentUser.team==='diaconato' ? 'Você, como '+esc(currentUser.nivel)+', gerencia diáconos, treinamento, escalas e Santa Ceia na aba Diaconato.' : 'Você, como '+esc(currentUser.nivel)+', também pode anexar formulários preenchidos da equipe (aba Formulário) e emitir o Relatório diário.'}</p>
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;">Pessoas com pendências</h3>
+      ${rows ? '<table class="people-table"><thead><tr><th>Nome</th><th>Status</th><th>Pendências</th></tr></thead><tbody>'+rows+'</tbody></table>' : '<div class="empty-note">Nenhuma pendência no momento.</div>'}
+    </div>`;
+}
+
+/* ---------- PAINEL ---------- */
+/* ---------- RELATÓRIO DIÁRIO DE CADASTROS ---------- */
+function canSeeReport(){
+  const t = myTeamKey();
+  if(t==='diaconato') return false;
+  return t==='coordenacao' || t==='inchurch' || t==='recepcao' || isLeaderNivel();
+}
+let reportDate = null;
+function localDayKey(d){
+  const x = new Date(d);
+  return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
+}
+function fmtDayBR(key){ const a = key.split('-'); return a[2]+'/'+a[1]+'/'+a[0]; }
+function shiftDay(key, delta){
+  const a = key.split('-').map(Number);
+  return localDayKey(new Date(a[0], a[1]-1, a[2]+delta));
+}
+function esc(s){
+  return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function reportList(dayKey){
+  return people.filter(p=>localDayKey(p.criadoEm)===dayKey)
+    .sort((a,b)=>new Date(a.criadoEm)-new Date(b.criadoEm));
+}
+function alertaLabel(p){ const a = pessoaAlerta(p); return a.charAt(0).toUpperCase()+a.slice(1); }
+function buildReportCsv(list){
+  const q = v => '"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const head = ['Nº','Nome','Telefone / WhatsApp','Data do cadastro','Hora','Status','Cadastrado por','Autoriza contato','Alerta','Pendências','Observação'];
+  const lines = [head.map(q).join(';')];
+  list.forEach((p,i)=>{
+    const dt = new Date(p.criadoEm);
+    lines.push([
+      i+1, p.nome, p.telefone||'', fmtDayBR(localDayKey(dt)),
+      p.seedV ? '—' : String(dt.getHours()).padStart(2,'0')+':'+String(dt.getMinutes()).padStart(2,'0'),
+      p.status, teamLabel(p.criadoPor), p.autorizaContato?'Sim':'Não',
+      alertaLabel(p), pessoaPendencias(p).join(' | '),
+      (p.coordenacao && p.coordenacao.observacao) || ''
+    ].map(q).join(';'));
+  });
+  return '\ufeff'+lines.join('\r\n');
+}
+function buildReportText(list, dayKey){
+  let t = '*IBNV Conectar — Cadastros de '+fmtDayBR(dayKey)+'*\nTotal: '+list.length+'\n';
+  list.forEach((p,i)=>{ t += '\n'+(i+1)+'. '+p.nome+' — '+(p.telefone||'sem telefone')+' ('+p.status+')'; });
+  return t;
+}
+function lerArquivoTexto(file){
+  return new Promise((resolve, reject)=>{
+    const fr = new FileReader();
+    fr.onload = ()=>resolve(String(fr.result));
+    fr.onerror = ()=>reject(fr.error);
+    fr.readAsText(file);
+  });
+}
+function downloadText(filename, text, mime){
+  const blob = new Blob([text], {type:mime});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+function copyText(text){
+  const fallback = ()=>{
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    let ok = false; try{ ok = document.execCommand('copy'); }catch(e){}
+    ta.remove();
+    alert(ok ? 'Resumo copiado.' : 'Não foi possível copiar automaticamente.');
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>alert('Resumo copiado.')).catch(fallback);
+  } else fallback();
+}
+function renderRelatorio(content){
+  const hoje = localDayKey(new Date());
+  if(!reportDate) reportDate = hoje;
+  const list = reportList(reportDate);
+  const byStatus = {}, byTeam = {};
+  list.forEach(p=>{
+    byStatus[p.status] = (byStatus[p.status]||0)+1;
+    const k = teamLabel(p.criadoPor); byTeam[k] = (byTeam[k]||0)+1;
+  });
+  const semTel = list.filter(p=>!p.telefone).length;
+  const comPend = list.filter(p=>pessoaPendencias(p).length).length;
+  const pills = obj => Object.keys(obj).length
+    ? Object.keys(obj).map(k=>'<span class="pill" style="margin:0 6px 6px 0;">'+esc(k)+': <b>'+obj[k]+'</b></span>').join('')
+    : '<span class="hint">—</span>';
+  const rows = list.map((p,i)=>{
+    const dt = new Date(p.criadoEm);
+    const pend = pessoaPendencias(p);
+    return '<tr><td>'+(i+1)+'</td><td><b>'+esc(p.nome)+'</b></td><td>'+esc(p.telefone||'—')+'</td>'
+      +'<td>'+(p.seedV ? '—' : String(dt.getHours()).padStart(2,'0')+':'+String(dt.getMinutes()).padStart(2,'0'))+'</td>'
+      +'<td>'+esc(p.status)+'</td><td>'+esc(teamLabel(p.criadoPor))+'</td>'
+      +'<td><span class="dot '+pessoaAlerta(p)+'"></span>'+alertaLabel(p)+'</td>'
+      +'<td>'+esc(pend.join('; ')||'—')+((p.coordenacao&&p.coordenacao.observacao)?'<div class="hint">'+esc(p.coordenacao.observacao)+'</div>':'')+'</td></tr>';
+  }).join('');
+  let dias = '';
+  for(let i=6;i>=0;i--){
+    const k = shiftDay(hoje,-i);
+    const n = people.filter(p=>localDayKey(p.criadoEm)===k).length;
+    dias += '<tr><td>'+fmtDayBR(k)+'</td><td>'+n+'</td></tr>';
+  }
+  const agora = new Date();
+  const emitidoPor = currentUser.role==='coordenacao' ? 'Coordenação' : currentUser.name;
+  content.innerHTML = `
+    <div class="toolbar no-print">
+      <button class="btn btn-outline btn-small" id="rpPrev">‹ Dia anterior</button>
+      <input type="date" id="rpDate" value="${reportDate}" style="width:auto;">
+      <button class="btn btn-outline btn-small" id="rpNext">Próximo dia ›</button>
+      <button class="btn btn-outline btn-small" id="rpToday">Hoje</button>
+      <button class="btn btn-outline btn-small" id="rpRefresh">Atualizar</button>
+    </div>
+    <div class="toolbar no-print">
+      <button class="btn btn-primary btn-small" id="rpPrint">Imprimir / Salvar PDF</button>
+      <button class="btn btn-primary btn-small" id="rpCsv">Baixar planilha (Excel/CSV)</button>
+      <button class="btn btn-outline btn-small" id="rpCopy">Copiar resumo p/ WhatsApp</button>
+    </div>
+    <div class="card" id="reportArea">
+      <div style="display:flex;align-items:center;gap:14px;border-bottom:3px solid var(--wine);padding-bottom:10px;margin-bottom:14px;">
+        <img src="${LOGO_URI}" alt="IBNV" style="height:42px;">
+        <div>
+          <h3 style="margin:0;color:var(--wine-deep);">Relatório diário de cadastros</h3>
+          <div class="hint" style="margin:0;">Data: <b>${fmtDayBR(reportDate)}</b> · Emitido em ${fmtDayBR(localDayKey(agora))} às ${String(agora.getHours()).padStart(2,'0')}:${String(agora.getMinutes()).padStart(2,'0')} por ${esc(emitidoPor)}</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="num">${list.length}</div><div class="lbl">Cadastros no dia</div></div>
+        <div class="stat"><div class="num">${semTel}</div><div class="lbl">Sem telefone</div></div>
+        <div class="stat"><div class="num">${comPend}</div><div class="lbl">Com pendências</div></div>
+      </div>
+      <div style="margin-bottom:6px;"><b style="font-size:.8rem;">Por status</b></div><div>${pills(byStatus)}</div>
+      <div style="margin:6px 0;"><b style="font-size:.8rem;">Cadastrado por</b></div><div>${pills(byTeam)}</div>
+      ${list.length ? `
+      <table class="people-table" style="margin-top:14px;">
+        <thead><tr><th>Nº</th><th>Nome</th><th>Telefone / WhatsApp</th><th>Hora</th><th>Status</th><th>Cadastrado por</th><th>Alerta</th><th>Pendências / Observação</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>` : '<div class="empty-note">Nenhum cadastro nesta data.</div>'}
+      <div style="margin-top:20px;"><b style="font-size:.8rem;">Cadastros por dia (últimos 7 dias)</b></div>
+      <table class="people-table" style="max-width:260px;margin-top:6px;">
+        <thead><tr><th>Dia</th><th>Cadastros</th></tr></thead><tbody>${dias}</tbody>
+      </table>
+    </div>`;
+  const go = k => { reportDate = k; renderRelatorio(content); };
+  content.querySelector('#rpPrev').onclick = ()=>go(shiftDay(reportDate,-1));
+  content.querySelector('#rpNext').onclick = ()=>go(shiftDay(reportDate,1));
+  content.querySelector('#rpToday').onclick = ()=>go(localDayKey(new Date()));
+  content.querySelector('#rpDate').onchange = e=>{ if(e.target.value) go(e.target.value); };
+  content.querySelector('#rpRefresh').onclick = async ()=>{ people = await loadPeople(); renderRelatorio(content); };
+  content.querySelector('#rpPrint').onclick = ()=>window.print();
+  content.querySelector('#rpCsv').onclick = ()=>downloadText('cadastros-'+reportDate+'.csv', buildReportCsv(list), 'text/csv;charset=utf-8');
+  content.querySelector('#rpCopy').onclick = ()=>copyText(buildReportText(list, reportDate));
+}
+
+/* ---------- FORMULÁRIO POR EQUIPE ---------- */
+const FORM_FIELDS = {
+  recepcao: [
+    {target:'nome', label:'Nome completo', type:'text', required:true},
+    {target:'telefone', label:'Telefone/WhatsApp', type:'tel'},
+    {target:'autorizaContato', label:'Autoriza contato', type:'checkbox'},
+  ],
+  consolidacao: [
+    {target:'nome', label:'Nome da pessoa (já cadastrada pela Recepção)', type:'text', required:true},
+    {target:'status', label:'Status', type:'select', options:['Visitante','Em consolidação','Novo convertido','Sem retorno','Visitante eventual','Pertence a outra igreja']},
+    {target:'consolidacao.ultimoContato', label:'Último contato', type:'date'},
+    {target:'consolidacao.responsavel', label:'Responsável', type:'text'},
+    {target:'consolidacao.proximoPasso', label:'Próximo passo', type:'text'},
+    {target:'consolidacao.prazo', label:'Prazo', type:'date'},
+  ],
+  discipulado: [
+    {target:'nome', label:'Nome da pessoa', type:'text', required:true},
+    {target:'status', label:'Status', type:'select', options:['Em discipulado','Preparação para batismo']},
+    {target:'discipulado.discipulador', label:'Discipulador', type:'text'},
+    {target:'discipulado.ultimoEncontro', label:'Último encontro', type:'date'},
+    {target:'discipulado.proximoPasso', label:'Próximo passo', type:'text'},
+    {target:'discipulado.prazo', label:'Prazo', type:'date'},
+  ],
+  cuidado: [
+    {target:'nome', label:'Nome da pessoa', type:'text', required:true},
+    {target:'cuidado.necessidade', label:'Necessidade', type:'select', options:['Nenhuma','Leve','Relevante','Grave']},
+    {target:'cuidado.descricaoNecessidade', label:'Descreva em poucas palavras a necessidade', type:'text'},
+    {target:'cuidado.sigiloCoordenacao', label:'Sigilo/Coordenação — não posso detalhar aqui, só a Coordenação deve saber', type:'checkbox'},
+    {target:'cuidado.ultimaParticipacao', label:'Última participação', type:'date'},
+    {target:'cuidado.ultimoContato', label:'Último contato', type:'date'},
+    {target:'cuidado.responsavel', label:'Responsável', type:'text'},
+    {target:'cuidado.proximoPasso', label:'Próximo passo', type:'text'},
+    {target:'cuidado.prazo', label:'Prazo', type:'date'},
+    {target:'cuidado.encaminhamentoPastoral', label:'Encaminhado à liderança pastoral', type:'checkbox'},
+  ],
+  inchurch: [
+    {target:'nome', label:'Nome da pessoa', type:'text', required:true},
+    {target:'telefone', label:'Telefone/WhatsApp', type:'tel'},
+    {target:'status', label:'Status', type:'select', options:['Visitante','Em consolidação','Novo convertido','Sem retorno','Visitante eventual','Pertence a outra igreja','Em discipulado','Preparação para batismo','Integrado','Membro','Em cuidado','Afastado']},
+  ],
+  coordenacao: [
+    {target:'nome', label:'Nome da pessoa', type:'text', required:true},
+    {target:'coordenacao.observacao', label:'Observação de gestão', type:'textarea'},
+    {target:'coordenacao.encaminhamentoPastoral', label:'Encaminhado pela Coordenação', type:'checkbox'},
+  ],
+};
+
+function generateFormHtml(teamKey){
+  const fields = FORM_FIELDS[teamKey] || [];
+  const label = teamLabel(teamKey);
+  const fieldsHtml = fields.map(f=>{
+    const id = 'f_'+f.target.replace(/\./g,'_');
+    if(f.type==='select'){
+      return `<label>${f.label}</label><select id="${id}" data-target="${f.target}">${(f.options||[]).map(o=>`<option value="${o}">${o}</option>`).join('')}</select>`;
+    }
+    if(f.type==='checkbox'){
+      return `<label style="display:flex;align-items:center;gap:8px;margin-top:14px;"><input type="checkbox" id="${id}" data-target="${f.target}"> ${f.label}</label>`;
+    }
+    if(f.type==='textarea'){
+      return `<label>${f.label}</label><textarea id="${id}" data-target="${f.target}"></textarea>`;
+    }
+    return `<label>${f.label}${f.required?' *':''}</label><input type="${f.type}" id="${id}" data-target="${f.target}" ${f.required?'required':''}>`;
+  }).join('');
+
+  return `<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><title>Formulário - ${label} - IBNV Conectar</title>
+<style>
+  body{font-family:Arial,sans-serif;background:#FFF;color:#231F20;max-width:560px;margin:0 auto;padding:24px;}
+  h1{color:#8E1418;font-size:1.25rem;border-bottom:3px solid #C21E24;padding-bottom:8px;}
+  label{display:block;margin-top:14px;font-size:.85rem;color:#555;font-weight:600;}
+  input[type=text],input[type=tel],input[type=date],select,textarea{width:100%;padding:8px;margin-top:4px;border:1px solid #DDD;border-radius:4px;font-size:.9rem;box-sizing:border-box;}
+  textarea{min-height:70px;}
+  button{margin-top:22px;background:#C21E24;color:#fff;border:none;padding:10px 20px;border-radius:5px;font-size:.9rem;cursor:pointer;margin-right:10px;}
+  button.secondary{background:#fff;color:#C21E24;border:1px solid #C21E24;}
+  .hint{font-size:.78rem;color:#777;margin-top:6px;}
+  @media print{ button{display:none;} }
+</style></head>
+<body>
+  <h1>IBNV Conectar — Formulário de ${label}</h1>
+  <p class="hint">Preencha os campos abaixo. Depois, clique em "Baixar dados preenchidos" e anexe o arquivo .json gerado na aba Formulário, dentro da área da equipe de ${label}.</p>
+  <form id="theForm">${fieldsHtml}</form>
+  <button type="button" id="btnGerar">Baixar dados preenchidos</button>
+  <button type="button" class="secondary" onclick="window.print()">Imprimir</button>
+  <script>
+    document.getElementById('btnGerar').onclick = function(){
+      var form = document.getElementById('theForm');
+      var els = form.querySelectorAll('[data-target]');
+      var data = {};
+      els.forEach(function(el){
+        var t = el.getAttribute('data-target');
+        data[t] = (el.type==='checkbox') ? el.checked : el.value;
+      });
+      if(!data['nome'] || !String(data['nome']).trim()){
+        alert('Preencha o nome da pessoa antes de baixar.');
+        return;
+      }
+      var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'formulario-${teamKey}-' + String(data['nome']).trim().toLowerCase().replace(/\\s+/g,'-') + '.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    };
+  <\/script>
+</body></html>`;
+}
+
+function downloadBlankForm(teamKey){
+  const html = generateFormHtml(teamKey);
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'formulario-'+teamKey+'.html';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function applyFormData(person, teamKey, data){
+  const fields = FORM_FIELDS[teamKey] || [];
+  fields.forEach(f=>{
+    if(f.target==='nome') return;
+    if(!(f.target in data)) return;
+    const val = f.type==='checkbox' ? !!data[f.target] : data[f.target];
+    const path = f.target.split('.');
+    let obj = person;
+    for(let i=0;i<path.length-1;i++) obj = obj[path[i]];
+    obj[path[path.length-1]] = val;
+  });
+}
+
+async function handleFormUpload(file, teamKey){
+  let data;
+  try{
+    const text = await file.text();
+    data = JSON.parse(text);
+  } catch(e){
+    alert('Não foi possível ler este arquivo. Verifique se é um .json gerado pelo formulário do Conectar.');
+    return;
+  }
+  const nome = (data.nome || '').trim();
+  if(!nome){ alert('Formulário inválido: falta o nome da pessoa.'); return; }
+  let person = people.find(p=>p.nome.toLowerCase()===nome.toLowerCase());
+  if(!person){
+    const podeCriar = teamKey==='recepcao' || teamKey==='inchurch' || teamKey==='coordenacao';
+    if(!podeCriar){
+      alert('"'+nome+'" ainda não está cadastrado(a). Peça para a Recepção ou o InChurch cadastrarem essa pessoa primeiro, ou confira se o nome está exatamente igual.');
+      return;
+    }
+    person = novaPessoa(teamKey);
+    person.nome = nome;
+    people.unshift(person);
+  }
+  applyFormData(person, teamKey, data);
+  try{ await savePeople(people); }
+  catch(e){ console.error('Erro ao salvar pessoas', e); }
+  alert('Formulário de "'+nome+'" processado e lançado no cadastro com sucesso.');
+  renderMain();
+}
+
+let formTeamSelected = null;
+function renderFormulario(content){
+  const isCoord = currentUser.role==='coordenacao';
+  const selectedTeam = isCoord ? (formTeamSelected || TEAMS[0].key) : myTeamKey();
+  const podeAnexar = canUploadFormFor(selectedTeam);
+  content.innerHTML = `
+    ${isCoord ? `
+      <label>Equipe</label>
+      <select id="formTeamSel" style="max-width:280px;">
+        ${TEAMS.filter(t=>t.key!=='kids' && t.key!=='diaconato').map(t=>`<option value="${t.key}" ${t.key===selectedTeam?'selected':''}>${t.label}</option>`).join('')}
+      </select>
+    ` : `<p class="hint">Sua equipe: <b>${teamLabel(selectedTeam)}</b>${currentUser.nivel?' · '+currentUser.nivel:''}</p>`}
+    <div class="card" style="margin-top:16px;max-width:540px;">
+      <h3 style="margin-top:0;">Formulário — ${teamLabel(selectedTeam)}</h3>
+      <p class="hint">Baixe o formulário desta equipe para preencher (na tela ou impresso).</p>
+      <button class="btn btn-outline" id="btnDownloadForm">Baixar formulário desta equipe</button>
+      ${podeAnexar ? `
+        <div style="margin-top:20px;border-top:1px solid var(--line);padding-top:16px;">
+          <label>Anexar formulário preenchido (.json)</label>
+          <input type="file" accept=".json,application/json" id="formFileInput">
+          <p class="hint">Ao anexar, os dados são lançados automaticamente no cadastro da pessoa — sem digitar tudo de novo.</p>
+        </div>
+      ` : `<p class="hint" style="margin-top:16px;">Só Líder ou Adjunto desta equipe (ou InChurch/Coordenação) pode anexar formulários preenchidos aqui. Você ainda pode baixar o formulário em branco acima.</p>`}
+    </div>
+  `;
+  const sel = content.querySelector('#formTeamSel');
+  if(sel) sel.onchange = e=>{ formTeamSelected = e.target.value; renderFormulario(content); };
+  content.querySelector('#btnDownloadForm').onclick = ()=>downloadBlankForm(selectedTeam);
+  const fileInput = content.querySelector('#formFileInput');
+  if(fileInput){
+    fileInput.onchange = async ()=>{
+      const file = fileInput.files[0];
+      if(!file) return;
+      await handleFormUpload(file, selectedTeam);
+      fileInput.value = '';
+    };
+  }
+}
+
+function renderPainel(content){
+  const base = visiblePeople();
+  const counts = {verde:0,amarelo:0,laranja:0,vermelho:0};
+  let pendCount=0, encamCount=0;
+  base.forEach(p=>{
+    counts[pessoaAlerta(p)]++;
+    if(pessoaPendencias(p).length) pendCount++;
+    if(p.cuidado.encaminhamentoPastoral || p.coordenacao.encaminhamentoPastoral) encamCount++;
+  });
+
+  const PHASES = [
+    {status:'Visitante', label:'Visitante', team:'Recepção'},
+    {status:'Em consolidação', label:'Em consolidação', team:'Consolidação'},
+    {status:'Novo convertido', label:'Novo convertido', team:'Consolidação'},
+    {status:'Em discipulado', label:'Em discipulado', team:'Discipulado'},
+    {status:'Preparação para batismo', label:'Preparação para batismo', team:'Discipulado'},
+    {status:'Integrado', label:'Integrado', team:'InChurch'},
+    {status:'Membro', label:'Membro', team:'Fase final'},
+  ];
+  const OUTROS = ['Sem retorno','Visitante eventual','Pertence a outra igreja','Em cuidado','Afastado'];
+  const phaseCounts = PHASES.map(f=>base.filter(p=>p.status===f.status).length);
+  const outrosCount = base.filter(p=>OUTROS.includes(p.status)).length;
+  const maxCount = Math.max(1, ...phaseCounts);
+  const n = PHASES.length;
+  const barsHtml = PHASES.map((f,i)=>{
+    const c = phaseCounts[i];
+    const pct = Math.round((c/maxCount)*100);
+    const hue = 8 + Math.round((i/(n-1))*4); // leve variação de tom, mantendo a família do vermelho
+    const light = 74 - Math.round((i/(n-1))*34); // mais claro no início, mais escuro na fase final
+    return `
+      <div class="phase-row">
+        <div class="phase-label">${f.label}<span class="phase-team">${f.team}</span></div>
+        <div class="phase-track">
+          <div class="phase-fill" style="width:${Math.max(pct,c>0?4:0)}%;background:hsl(${hue} 68% ${light}%);"></div>
+        </div>
+        <div class="phase-count">${c}</div>
+      </div>
+    `;
+  }).join('');
+
+  content.innerHTML = `
+    <div class="stat-row">
+      <div class="stat"><div class="num">${base.length}</div><div class="lbl">Pessoas acompanhadas</div></div>
+      <div class="stat"><div class="num"><span class="dot verde"></span>${counts.verde}</div><div class="lbl">Verde</div></div>
+      <div class="stat"><div class="num"><span class="dot amarelo"></span>${counts.amarelo}</div><div class="lbl">Amarelo</div></div>
+      <div class="stat"><div class="num"><span class="dot laranja"></span>${counts.laranja}</div><div class="lbl">Laranja</div></div>
+      <div class="stat"><div class="num"><span class="dot vermelho"></span>${counts.vermelho}</div><div class="lbl">Vermelho</div></div>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><div class="num">${pendCount}</div><div class="lbl">Com pendências</div></div>
+      <div class="stat"><div class="num">${encamCount}</div><div class="lbl">Encaminhados à liderança pastoral</div></div>
+    </div>
+
+    <div class="card" style="margin-top:22px;">
+      <h3 style="margin-top:0;">Evolução do projeto por fase</h3>
+      <p class="hint" style="margin-bottom:16px;">Quantas pessoas estão em cada etapa do fluxo, da Recepção até a fase final (Membro).</p>
+      <div class="phase-chart">${barsHtml}</div>
+      ${outrosCount>0 ? `<p class="hint" style="margin-top:14px;">+ ${outrosCount} pessoa${outrosCount===1?'':'s'} em situações à parte do fluxo principal (sem retorno, afastado, outra igreja etc.)</p>` : ''}
+    </div>
+
+    <p class="hint" style="margin-top:18px;">Sua área de atuação: <b>${myTeamKey()==='coordenacao' ? 'Coordenação (acesso completo)' : teamLabel(myTeamKey())}</b>. Vá para a aba Pessoas para registrar ou atualizar alguém.</p>
+  `;
+}
+
+/* ---------- PESSOAS ---------- */
+function renderPessoas(content){
+  content.innerHTML = '';
+  if(currentUser.role==='discipulador'){
+    const nota = document.createElement('p');
+    nota.className = 'hint';
+    nota.style.marginBottom = '14px';
+    nota.textContent = 'Você vê apenas as pessoas atribuídas a você como discipulador (campo Discipulador, na seção Discipulado).';
+    content.appendChild(nota);
+  }
+
+  if(canCreatePessoa()){
+    const addBtn = document.createElement('button');
+    addBtn.className='btn btn-primary';
+    addBtn.textContent = '+ Registrar nova pessoa';
+    addBtn.style.marginBottom='16px';
+    addBtn.onclick = async ()=>{
+      const p = novaPessoa(myTeamKey());
+      people.unshift(p);
+      await savePeople(people);
+      expandedId = p.id;
+      renderMain();
+    };
+    content.appendChild(addBtn);
+  }
+
+  const toolbar = document.createElement('div');
+  toolbar.className = 'toolbar';
+  toolbar.innerHTML = `
+    <input type="text" id="search" placeholder="Buscar por nome..." value="${searchTerm}">
+    <select id="filterAlerta">
+      <option value="todos">Todos os alertas</option>
+      <option value="verde">Verde</option>
+      <option value="amarelo">Amarelo</option>
+      <option value="laranja">Laranja</option>
+      <option value="vermelho">Vermelho</option>
+    </select>
+    <label class="checkline" style="margin:0;"><input type="checkbox" id="onlyPend"> Só com pendências</label>
+  `;
+  content.appendChild(toolbar);
+  toolbar.querySelector('#search').oninput = e=>{ searchTerm=e.target.value; renderPessoasList(); };
+  toolbar.querySelector('#filterAlerta').value = filterAlerta;
+  toolbar.querySelector('#filterAlerta').onchange = e=>{ filterAlerta=e.target.value; renderPessoasList(); };
+  toolbar.querySelector('#onlyPend').checked = onlyPendencias;
+  toolbar.querySelector('#onlyPend').onchange = e=>{ onlyPendencias=e.target.checked; renderPessoasList(); };
+
+  const list = document.createElement('div');
+  list.id = 'peopleList';
+  content.appendChild(list);
+  renderPessoasList();
+}
+
+function renderPessoasList(){
+  const list = document.getElementById('peopleList');
+  if(!list) return;
+  let filtered = visiblePeople().filter(p=>{
+    if(searchTerm && !p.nome.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+    if(filterAlerta!=='todos' && pessoaAlerta(p)!==filterAlerta) return false;
+    if(onlyPendencias && pessoaPendencias(p).length===0) return false;
+    return true;
+  });
+  if(filtered.length===0){
+    list.innerHTML = '<div class="empty-note">Nenhuma pessoa encontrada com esses filtros.</div>';
+    return;
+  }
+  list.innerHTML = '';
+  filtered.forEach(p=>{
+    const row = document.createElement('div');
+    row.className='person-row';
+    const pend = pessoaPendencias(p);
+    row.innerHTML = `
+      <div class="person-head" data-id="${p.id}">
+        <div>
+          <div class="name"><span class="dot ${pessoaAlerta(p)}"></span>${p.nome||'(sem nome)'}</div>
+          <div class="meta">${p.status} · cadastrado em ${fmtDate(p.criadoEm)} por ${teamLabel(p.criadoPor)}</div>
+          ${pend.length? `<div class="flag">${pend.join(' · ')}</div>` : ''}
+        </div>
+        <span class="pill">${expandedId===p.id ? 'fechar ▲' : 'abrir ▼'}</span>
+      </div>
+      <div class="person-body ${expandedId===p.id?'open':''}" id="body-${p.id}"></div>
+    `;
+    list.appendChild(row);
+    row.querySelector('.person-head').onclick = ()=>{
+      expandedId = expandedId===p.id ? null : p.id;
+      renderPessoasList();
+    };
+    if(expandedId===p.id){
+      renderPersonDetail(document.getElementById('body-'+p.id), p);
+    }
+  });
+}
+
+function sectionField(label, inputHtml){
+  return `<div><label>${label}</label>${inputHtml}</div>`;
+}
+
+function renderPersonDetail(container, p){
+  const locked = key => canEditSection(key) ? '' : 'locked';
+  const dis = key => canEditSection(key) ? '' : 'disabled';
+
+  container.innerHTML = `
+    <div class="section-block ${locked('basico')}">
+      <h4>Recepção/Acolhimento</h4>
+      ${isIntegranteNivel() && canEditSection('basico') ? '<p class="hint" style="margin:0 0 8px;">Confira o nome antes de sair do campo: depois de cadastrado, só Líder, Adjunto ou Coordenação podem alterá-lo.</p>' : ''}
+      <div class="section-grid">
+        ${sectionField('Nome', `<input type="text" data-f="nome" value="${esc(p.nome)}" ${(dis('basico') || nomeTravado(p)) ? 'disabled' : ''}>`)}
+        ${sectionField('Telefone', `<input type="tel" data-f="telefone" value="${p.telefone}" ${dis('basico')}>`)}
+      </div>
+      <label class="checkline"><input type="checkbox" data-f="autorizaContato" ${p.autorizaContato?'checked':''} ${dis('basico')}> Autoriza contato</label>
+    </div>
+
+    <div class="section-block">
+      <h4>Status geral</h4>
+      <select data-f="status" ${dis('inchurch')&&dis('coordenacao')&&dis('consolidacao')&&dis('discipulado')&&dis('cuidado') ? 'disabled':''}>
+        ${['Visitante','Em consolidação','Novo convertido','Sem retorno','Visitante eventual','Pertence a outra igreja','Em discipulado','Preparação para batismo','Integrado','Membro','Em cuidado','Afastado']
+          .map(s=>`<option value="${s}" ${p.status===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+    </div>
+
+    <div class="section-block ${locked('consolidacao')}">
+      <h4>Consolidação</h4>
+      <div class="section-grid">
+        ${sectionField('Último contato', `<input type="date" data-f="consolidacao.ultimoContato" value="${p.consolidacao.ultimoContato||''}" ${dis('consolidacao')}>`)}
+        ${sectionField('Responsável', `<input type="text" data-f="consolidacao.responsavel" value="${p.consolidacao.responsavel}" ${dis('consolidacao')}>`)}
+        ${sectionField('Prazo', `<input type="date" data-f="consolidacao.prazo" value="${p.consolidacao.prazo||''}" ${dis('consolidacao')}>`)}
+      </div>
+      ${sectionField('Próximo passo', `<input type="text" data-f="consolidacao.proximoPasso" value="${p.consolidacao.proximoPasso}" ${dis('consolidacao')}>`)}
+    </div>
+
+    <div class="section-block ${locked('cuidado')}">
+      <h4>Cuidado</h4>
+      <div class="section-grid">
+        ${sectionField('Necessidade', `<select data-f="cuidado.necessidade" ${dis('cuidado')}>
+            ${['Nenhuma','Leve','Relevante','Grave'].map(n=>`<option value="${n}" ${p.cuidado.necessidade===n?'selected':''}>${n}</option>`).join('')}
+          </select>`)}
+        ${sectionField('Última participação', `<input type="date" data-f="cuidado.ultimaParticipacao" value="${p.cuidado.ultimaParticipacao||''}" ${dis('cuidado')}>`)}
+        ${sectionField('Último contato', `<input type="date" data-f="cuidado.ultimoContato" value="${p.cuidado.ultimoContato||''}" ${dis('cuidado')}>`)}
+        ${sectionField('Responsável', `<input type="text" data-f="cuidado.responsavel" value="${p.cuidado.responsavel}" ${dis('cuidado')}>`)}
+        ${sectionField('Prazo', `<input type="date" data-f="cuidado.prazo" value="${p.cuidado.prazo||''}" ${dis('cuidado')}>`)}
+      </div>
+      ${sectionField('Próximo passo', `<input type="text" data-f="cuidado.proximoPasso" value="${p.cuidado.proximoPasso}" ${dis('cuidado')}>`)}
+      ${sectionField('Descreva em poucas palavras a necessidade', `<input type="text" data-f="cuidado.descricaoNecessidade" value="${p.cuidado.descricaoNecessidade||''}" placeholder="Ex: dificuldade financeira, saúde, conflito familiar..." ${dis('cuidado')}>`)}
+      <label class="checkline"><input type="checkbox" data-f="cuidado.sigiloCoordenacao" ${p.cuidado.sigiloCoordenacao?'checked':''} ${dis('cuidado')}> Sigilo/Coordenação — não posso detalhar aqui, só a Coordenação deve saber</label>
+      <label class="checkline"><input type="checkbox" data-f="cuidado.encaminhamentoPastoral" ${p.cuidado.encaminhamentoPastoral?'checked':''} ${dis('cuidado')}> Encaminhado à liderança pastoral</label>
+    </div>
+
+    <div class="section-block ${locked('discipulado')}">
+      <h4>Discipulado</h4>
+      <div class="section-grid">
+        ${sectionField('Discipulador', `<input type="text" data-f="discipulado.discipulador" value="${p.discipulado.discipulador}" ${dis('discipulado')}>`)}
+        ${sectionField('Último encontro', `<input type="date" data-f="discipulado.ultimoEncontro" value="${p.discipulado.ultimoEncontro||''}" ${dis('discipulado')}>`)}
+        ${sectionField('Prazo', `<input type="date" data-f="discipulado.prazo" value="${p.discipulado.prazo||''}" ${dis('discipulado')}>`)}
+      </div>
+      ${sectionField('Próximo passo', `<input type="text" data-f="discipulado.proximoPasso" value="${p.discipulado.proximoPasso}" ${dis('discipulado')}>`)}
+    </div>
+
+    <div class="section-block ${locked('coordenacao')}">
+      <h4>Coordenação</h4>
+      ${sectionField('Observação de gestão', `<textarea data-f="coordenacao.observacao" ${dis('coordenacao')}>${p.coordenacao.observacao}</textarea>`)}
+      <label class="checkline"><input type="checkbox" data-f="coordenacao.encaminhamentoPastoral" ${p.coordenacao.encaminhamentoPastoral?'checked':''} ${dis('coordenacao')}> Encaminhado pela Coordenação</label>
+    </div>
+
+    <div style="margin-top:10px;display:flex;gap:10px;">
+      ${canDeletePessoa() ? `<button class="btn btn-danger btn-small" id="delPerson">Excluir pessoa</button>` : ''}
+    </div>
+  `;
+
+  if(currentUser && currentUser.role==='discipulador'){
+    container.querySelectorAll('.section-block').forEach(sb=>{
+      const t = sb.querySelector('h4'); const n = t ? t.textContent : '';
+      if(n==='Consolidação' || n==='Cuidado' || n==='Coordenação') sb.remove();
+    });
+  }
+  container.querySelectorAll('[data-f]').forEach(el=>{
+    const path = el.getAttribute('data-f').split('.');
+    const commit = async ()=>{
+      let val = el.type==='checkbox' ? el.checked : el.value;
+      let target = p;
+      for(let i=0;i<path.length-1;i++) target = target[path[i]];
+      if(path.length===1 && path[0]==='nome' && nomeTravado(p)){ renderPessoasList(); return; }
+      target[path[path.length-1]] = val;
+      await savePeople(people);
+      renderPessoasList();
+    };
+    el.addEventListener('change', commit);
+  });
+
+  const delBtn = container.querySelector('#delPerson');
+  if(delBtn) delBtn.onclick = ()=>{
+    pedirConfirmacao(delBtn, 'Excluir esta pessoa da base? Não dá para desfazer.', async ()=>{
+      people = people.filter(x=>x.id!==p.id);
+      await savePeople(people);
+      expandedId = null;
+      renderMain();
+    });
+  };
+}
+
+/* ---------- GESTÃO DE EQUIPE (Coordenação) ---------- */
+function renderEquipe(content){
+  content.innerHTML = `
+    <div class="banner">Só a Coordenação cadastra os integrantes. Quem não tem senha própria entra com a senha padrão (veja em Configurações). Marque "discipulador" para quem acompanha pessoas no discipulado; quem é da equipe de Discipulado já pode entrar como discipulador.</div>
+    <form class="inline-add" id="addForm">
+      <div>
+        <label>Nome do integrante</label>
+        <input type="text" id="newName" placeholder="Nome completo">
+      </div>
+      <div>
+        <label>Equipe</label>
+        <select id="newTeam">
+          ${TEAMS.filter(t=>t.key!=='coordenacao').map(t=>`<option value="${t.key}">${t.label}</option>`).join('')}
+          <option value="coordenacao">Coordenação</option>
+        </select>
+      </div>
+      <div>
+        <label>Função</label>
+        <select id="newRole">
+          <option value="Líder">Líder</option>
+          <option value="Adjunto">Adjunto</option>
+          <option value="Integrante" selected>Integrante</option>
+        </select>
+      </div>
+      <div>
+        <label>Senha inicial</label>
+        <input type="password" id="newSenha" placeholder="Opcional (mín. 4) — vazio usa a padrão">
+      </div>
+      <div>
+        <label>Discipulador</label>
+        <label class="checkline" style="margin:6px 0 0;"><input type="checkbox" id="newDisc"> Também é discipulador</label>
+      </div>
+      <button type="submit" class="btn btn-primary" id="addBtn" disabled>Cadastrar</button>
+    </form>
+    <table class="roster-table">
+      <thead><tr><th>Nome</th><th>Equipe</th><th>Função</th><th>Senha</th><th>Discipulador</th><th></th></tr></thead>
+      <tbody id="rosterBody"></tbody>
+    </table>
+  `;
+  const nameField = content.querySelector('#newName');
+  const senhaField = content.querySelector('#newSenha');
+  const addBtn = content.querySelector('#addBtn');
+  const checkValid = ()=>{
+    const s = senhaField.value.trim(); addBtn.disabled = nameField.value.trim().length===0 || (s.length>0 && s.length<4);
+  };
+  nameField.addEventListener('input', checkValid);
+  senhaField.addEventListener('input', checkValid);
+  const body = content.querySelector('#rosterBody');
+  if(roster.length===0){
+    body.innerHTML = `<tr><td colspan="6" class="empty-note">Nenhum integrante cadastrado ainda.</td></tr>`;
+  } else {
+    roster.forEach(r=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${r.name}</td>
+        <td>
+          <select data-id="${r.id}" class="teamSelect">
+            ${TEAMS.map(t=>`<option value="${t.key}" ${r.team===t.key?'selected':''}>${t.label}</option>`).join('')}
+          </select>
+        </td>
+        <td>
+          <select data-id="${r.id}" class="roleSelect">
+            ${['Líder','Adjunto','Integrante'].map(fn=>`<option value="${fn}" ${(r.role||'Integrante')===fn?'selected':''}>${fn}</option>`).join('')}
+          </select>
+        </td>
+        <td>
+          <div style="display:flex;flex-direction:column;gap:3px;">
+            <span class="pill">${r.senha ? '✓ própria' : 'usa a padrão'}</span>
+            <input type="password" data-id="${r.id}" class="senhaInput" placeholder="Nova senha">
+          </div>
+        </td>
+        <td><input type="checkbox" class="discCheck" data-id="${r.id}" ${r.team==='discipulado' ? 'checked disabled title="Equipe de Discipulado já pode entrar como discipulador"' : (r.discipulador?'checked':'')}></td>
+        <td><button class="btn btn-danger btn-small" data-remove="${r.id}">Remover</button></td>
+      `;
+      body.appendChild(tr);
+    });
+  }
+  content.querySelectorAll('.teamSelect').forEach(sel=>{
+    sel.onchange = async ()=>{
+      const item = roster.find(r=>r.id===sel.getAttribute('data-id'));
+      item.team = sel.value;
+      await saveRoster(roster);
+    };
+  });
+  content.querySelectorAll('.roleSelect').forEach(sel=>{
+    sel.onchange = async ()=>{
+      const item = roster.find(r=>r.id===sel.getAttribute('data-id'));
+      item.role = sel.value;
+      await saveRoster(roster);
+    };
+  });
+  content.querySelectorAll('.discCheck').forEach(cb=>{
+    cb.onchange = async ()=>{
+      const item = roster.find(r=>r.id===cb.getAttribute('data-id'));
+      item.discipulador = cb.checked;
+      await saveRoster(roster);
+    };
+  });
+  content.querySelectorAll('.senhaInput').forEach(inp=>{
+    inp.onchange = async ()=>{
+      const val = inp.value.trim();
+      if(!val) return;
+      if(val.length<4){ alert('Use ao menos 4 caracteres.'); inp.value=''; return; }
+      const item = roster.find(r=>r.id===inp.getAttribute('data-id'));
+      item.senha = val;
+      await saveRoster(roster);
+      renderEquipe(content);
+    };
+  });
+  content.querySelectorAll('[data-remove]').forEach(btn=>{
+    btn.onclick = ()=>{
+      const id = btn.getAttribute('data-remove');
+      pedirConfirmacao(btn, 'Remover este integrante da equipe?', async ()=>{
+        roster = roster.filter(r=>r.id!==id);
+        await saveRoster(roster);
+        renderEquipe(content);
+      });
+    };
+  });
+  content.querySelector('#addForm').onsubmit = async (e)=>{
+    e.preventDefault();
+    const name = content.querySelector('#newName').value.trim();
+    const team = content.querySelector('#newTeam').value;
+    const role = content.querySelector('#newRole').value;
+    const senha = content.querySelector('#newSenha').value.trim();
+    const disc = content.querySelector('#newDisc').checked;
+    if(!name || (senha.length>0 && senha.length<4)) return;
+    if(roster.some(r=>r.name.toLowerCase()===name.toLowerCase())){
+      alert('Já existe um integrante com esse nome. Ajuste o nome ou edite a equipe dele na lista abaixo.');
+      return;
+    }
+    roster.push({id:'m'+Date.now()+Math.floor(Math.random()*1000), name, team, role, senha, discipulador: disc});
+    await saveRoster(roster);
+    renderEquipe(content);
+  };
+}
+
+/* ---------- ORGANOGRAMA (Coordenação) ---------- */
+const TEAM_META = {
+  recepcao:    {icon:'🤝', sub:'A PRIMEIRA IMPRESSÃO QUE CONECTA', quote:'"Recebei-vos uns aos outros, como também Cristo nos recebeu, para a glória de Deus."', ref:'Romanos 15:7'},
+  consolidacao:{icon:'🔗', sub:'DO PRIMEIRO CONTATO A UM RELACIONAMENTO DURADOURO', quote:'"Não é apenas um contato. É o início de uma história com Cristo."', ref:''},
+  discipulado: {icon:'📖', sub:'CAMINHANDO JUNTOS EM DIREÇÃO À MATURIDADE', quote:'"Ide, fazei discípulos de todas as nações..."', ref:'Mateus 28:19'},
+  diaconato:   {icon:'🕊', sub:'SERVIR COM HUMILDADE, ORDEM E REVERÊNCIA', quote:'"Escolhei, pois, irmãos, dentre vós sete homens de boa reputação, cheios do Espírito Santo e de sabedoria, aos quais encarregaremos deste serviço."', ref:'Atos 6:3'},
+  kids:        {icon:'🧒', sub:'ACOLHER A CRIANÇA E A FAMÍLIA', quote:'"Deixai vir a mim os pequeninos, e não os impeçais, porque dos tais é o reino dos céus."', ref:'Mateus 19:14'},
+  cuidado:     {icon:'❤', sub:'PESSOAS IMPORTAM, SEMPRE', quote:'"Levai as cargas uns dos outros, e assim cumprireis a lei de Cristo."', ref:'Gálatas 6:2'},
+  inchurch:    {icon:'📊', sub:'INFORMAÇÃO A SERVIÇO DE PESSOAS', quote:'"Tudo, porém, seja feito com decência e ordem."', ref:'1 Coríntios 14:40'},
+  coordenacao: {icon:'👥', sub:'PLANEJAMENTO · UNIDADE · DIRECIONAMENTO', quote:'"Porque somos cooperadores de Deus no cuidado de pessoas."', ref:'1 Coríntios 3:9'},
+};
+function renderOrganograma(content){
+  const cards = TEAMS.map(t=>{
+    const members = roster.filter(r=>r.team===t.key);
+    const lider = members.filter(r=>(r.role||'Integrante')==='Líder');
+    const adjunto = members.filter(r=>(r.role||'Integrante')==='Adjunto');
+    const integrantes = members.filter(r=>(r.role||'Integrante')==='Integrante');
+    const meta = TEAM_META[t.key] || {icon:'•', sub:'', quote:'', ref:''};
+    const namesOrEmpty = list => list.length
+      ? list.map(r=>r.name).join(', ')
+      : '<span class="empty">Ninguém cadastrado</span>';
+    return `
+      <div class="org-card">
+        <div class="org-head">
+          <div class="org-icon">${meta.icon}</div>
+          <div>
+            <h4>${t.label}</h4>
+            <div class="org-sub">${meta.sub}</div>
+          </div>
+          <div class="org-count">${members.length} pessoa${members.length===1?'':'s'}</div>
+        </div>
+        <div class="org-body">
+          <div class="org-role"><div class="role-label">Líder</div><div class="names">${namesOrEmpty(lider)}</div></div>
+          <div class="org-role"><div class="role-label">Adjunto</div><div class="names">${namesOrEmpty(adjunto)}</div></div>
+          <div class="org-role"><div class="role-label">Integrantes</div><div class="names">${namesOrEmpty(integrantes)}</div></div>
+          ${meta.quote ? `<div class="org-quote">${meta.quote}${meta.ref?`<b>${meta.ref}</b>`:''}</div>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+  content.innerHTML = `
+    <p class="hint" style="margin-bottom:16px;">Visão geral de quem lidera, apoia e integra cada equipe, conforme cadastrado em Gestão de Equipe.</p>
+    <div class="org-grid">${cards}</div>
+    <div class="org-flow">
+      <div class="step"><div class="circle">🤍</div>Receber</div>
+      <span class="sep">···</span>
+      <div class="step"><div class="circle">❤</div>Cuidar</div>
+      <span class="sep">···</span>
+      <div class="step"><div class="circle">📖</div>Discipular</div>
+      <span class="sep">···</span>
+      <div class="step"><div class="circle">🤝</div>Conectar</div>
+      <span class="sep">···</span>
+      <div class="step"><div class="circle">🕊</div>Servir</div>
+    </div>
+    <p style="text-align:center;font-size:.82rem;font-style:italic;color:var(--ink-soft);margin-top:14px;">
+      "E perseveravam na doutrina dos apóstolos, na comunhão, no partir do pão e nas orações."
+      <b style="display:block;font-style:normal;color:var(--wine);font-size:.76rem;margin-top:3px;">Atos 2:42</b>
+    </p>
+  `;
+}
+
+/* ---------- CONFIGURAÇÕES (Coordenação) ---------- */
+function renderConfig(content){
+  content.innerHTML = `
+    <div class="card" style="max-width:420px;">
+      <h3 style="margin-top:0;">Trocar senha da Coordenação</h3>
+      <label>Nova senha</label>
+      <input type="password" id="cp1">
+      <label>Confirmar</label>
+      <input type="password" id="cp2">
+      <div id="cerr" class="error-text"></div>
+      <div style="margin-top:14px;">
+        <button class="btn btn-primary" id="saveP">Salvar nova senha</button>
+      </div>
+      <p class="hint" style="margin-top:14px;">Lembre-se: essa senha só organiza o acesso dentro da página, não é uma proteção de segurança real. Compartilhe apenas com quem for de fato da Coordenação.</p>
+    </div>
+    <div class="card" style="max-width:420px;margin-top:16px;">
+      <h3 style="margin-top:0;">Senha padrão dos integrantes</h3>
+      <p class="hint">Vale para quem ainda não tem senha própria em Gestão de Equipe, nos acessos de integrante, Líder/Adjunto e Discipulador. Atual: <b id="mpAtual">…</b></p>
+      <label>Nova senha padrão</label>
+      <input type="password" id="mp1">
+      <div id="merr" class="error-text"></div>
+      <div style="margin-top:14px;"><button class="btn btn-primary" id="saveMP">Salvar senha padrão</button></div>
+    </div>
+    <div class="card" style="max-width:520px;margin-top:16px;">
+      <h3 style="margin-top:0;">Backup e importação de dados</h3>
+      <p class="hint">Baixe uma cópia de tudo (integrantes, pessoas, fichas do Kids e checklists) ou importe um arquivo .json. A importação só acrescenta o que ainda não existe; nada é apagado nem sobrescrito. Guarde o backup em local seguro, pois ele contém dados de pessoas e de crianças.</p>
+      <button class="btn btn-outline" id="bkExport">Baixar backup (.json)</button>
+      <div style="margin-top:14px;"><label>Importar dados (.json)</label><input type="file" id="bkImport" accept=".json,application/json"></div>
+    </div>
+  `;
+  content.querySelector('#bkExport').onclick = async ()=>{
+    await ensureKids(true); await ensureDiac(true);
+    const dados = {app:'ibnv-conectar', geradoEm:new Date().toISOString(), roster, people, kids, kidsChecks, diaconos:diacos, diacEscalas, diacCeias};
+    downloadText('backup-ibnv-conectar-'+localDayKey(new Date())+'.json', JSON.stringify(dados,null,2), 'application/json');
+    toast('Backup gerado. Guarde o arquivo em local seguro.');
+  };
+  content.querySelector('#bkImport').onchange = async (ev)=>{
+    const file = ev.target.files && ev.target.files[0];
+    if(!file) return;
+    let dados;
+    try{ dados = JSON.parse(await lerArquivoTexto(file)); }
+    catch(e){ toast('Arquivo inválido: não consegui ler esse .json.'); return; }
+    if(!dados || typeof dados!=='object'){ toast('Arquivo inválido.'); return; }
+    await ensureKids(); await ensureDiac();
+    const somar = (atual, novos)=>{
+      if(!Array.isArray(novos)) return 0;
+      const ids = new Set(atual.map(x=>x.id)); let n = 0;
+      novos.forEach(x=>{ if(x && x.id && !ids.has(x.id)){ atual.push(x); ids.add(x.id); n++; } });
+      return n;
+    };
+    const n = {
+      integrantes: somar(roster, dados.roster),
+      pessoas: somar(people, dados.people),
+      criancas: somar(kids, dados.kids),
+      checklists: somar(kidsChecks, dados.kidsChecks),
+      diaconos: somar(diacos, dados.diaconos), escalas: somar(diacEscalas, dados.diacEscalas), ceias: somar(diacCeias, dados.diacCeias)
+    };
+    if(n.integrantes) await saveRoster(roster);
+    if(n.pessoas) await savePeople(people);
+    if(n.criancas) await saveKids(kids);
+    if(n.checklists) await saveKidsChecks(kidsChecks);
+    if(n.diaconos) await saveDiacos();
+    if(n.escalas) await saveDiacEscalas();
+    if(n.ceias) await saveDiacCeias();
+    ev.target.value = '';
+    toast('Importado: '+n.pessoas+' pessoa(s), '+n.integrantes+' integrante(s), '+n.criancas+' criança(s), '+n.checklists+' checklist(s), '+n.diaconos+' diácono(s), '+n.escalas+' escala(s), '+n.ceias+' Santa(s) Ceia(s).');
+  };
+  loadMemberPasscode().then(v=>{ const el = content.querySelector('#mpAtual'); if(el) el.textContent = v; });
+  content.querySelector('#saveMP').onclick = async ()=>{
+    const a = content.querySelector('#mp1').value.trim();
+    if(a.length<4){ content.querySelector('#merr').textContent='Use ao menos 4 caracteres.'; return; }
+    await saveMemberPasscode(a);
+    content.querySelector('#merr').style.color = 'var(--verde)';
+    content.querySelector('#merr').textContent='Senha padrão atualizada.';
+    content.querySelector('#mpAtual').textContent = a;
+    content.querySelector('#mp1').value = '';
+  };
+  content.querySelector('#saveP').onclick = async ()=>{
+    const a = content.querySelector('#cp1').value;
+    const b = content.querySelector('#cp2').value;
+    if(a.length<4){ content.querySelector('#cerr').textContent='Use ao menos 4 caracteres.'; return; }
+    if(a!==b){ content.querySelector('#cerr').textContent='As senhas não coincidem.'; return; }
+    await savePasscode(a);
+    content.querySelector('#cerr').style.color = 'var(--verde)';
+    content.querySelector('#cerr').textContent='Senha atualizada.';
+  };
+}
+
+boot();
+</script>
+</body>
+</html>
